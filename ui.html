@@ -381,6 +381,7 @@
         let validMoves = [];
         let lastMove = null;
         let isThinking = false;
+        let gameOver = false;
         
         // 初始化棋盘
         function initBoard() {
@@ -391,6 +392,7 @@
             validMoves = [];
             lastMove = null;
             isThinking = false;
+            gameOver = false;
             clearMoveLines();
             renderBoard();
             updateStatus('你是红方，请点击棋子');
@@ -618,6 +620,30 @@
                         }
                     }
                 }
+                
+                // 将帅照面规则：可以飞将（吃掉对方的将/帅）
+                const enemyKing = isRed ? 'k' : 'K';
+                let enemyKingRow = -1;
+                for (let r = 0; r < 10; r++) {
+                    if (board[r][col] === enemyKing) {
+                        enemyKingRow = r;
+                        break;
+                    }
+                }
+                if (enemyKingRow !== -1) {
+                    let blocked = false;
+                    const startRow = Math.min(row, enemyKingRow) + 1;
+                    const endRow = Math.max(row, enemyKingRow);
+                    for (let r = startRow; r < endRow; r++) {
+                        if (board[r][col] !== '.') {
+                            blocked = true;
+                            break;
+                        }
+                    }
+                    if (!blocked) {
+                        moves.push({row: enemyKingRow, col: col});
+                    }
+                }
             } else if (pieceType === 'advisor') {
                 const offsets = [[-1,-1], [-1,1], [1,-1], [1,1]];
                 for (const [dr, dc] of offsets) {
@@ -654,7 +680,7 @@
         
         // 点击棋子
         function onPieceClick(row, col) {
-            if (isThinking || currentTurn !== 'red') return;
+            if (isThinking || currentTurn !== 'red' || gameOver) return;
             
             const piece = board[row][col];
             const pieceColor = getPieceColor(piece);
@@ -703,8 +729,10 @@
             
             if (captured.toLowerCase() === 'k') {
                 renderBoard();
+                isThinking = false;
+                gameOver = true;
                 setTimeout(() => {
-                    alert('🎉 你赢了！');
+                    alert('🎉 你赢了！点击"新游戏"开始下一局');
                     clearMoveLines();
                 }, 100);
                 return;
@@ -793,8 +821,9 @@
             
             if (selectedMove.captured.toLowerCase() === 'k') {
                 renderBoard();
+                gameOver = true;
                 setTimeout(() => {
-                    alert('AI获胜！');
+                    alert('AI获胜！点击"新游戏"开始下一局');
                     clearMoveLines();
                 }, 100);
                 isThinking = false;
@@ -847,6 +876,7 @@
             currentTurn = 'red';
             selectedPiece = null;
             validMoves = [];
+            gameOver = false;
             lastMove = moveHistory.length > 0 ? {
                 from: moveHistory[moveHistory.length - 1].from,
                 to: moveHistory[moveHistory.length - 1].to
