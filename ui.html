@@ -218,6 +218,88 @@
             overflow: hidden;
         }
         
+        /* 水波纹效果 */
+        .water-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, rgba(64,164,223,0.6), rgba(64,164,223,0.2), transparent);
+            overflow: hidden;
+        }
+        
+        .water-border::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 50px,
+                rgba(255,255,255,0.1) 50px,
+                rgba(255,255,255,0.1) 100px
+            );
+            animation: waterFlow 8s linear infinite;
+        }
+        
+        .water-border::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: -100%;
+            width: 200%;
+            height: 30px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 30px,
+                rgba(255,255,255,0.15) 30px,
+                rgba(255,255,255,0.15) 60px
+            );
+            animation: waterFlow 5s linear infinite;
+        }
+        
+        @keyframes waterFlow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); }
+        }
+        
+        .water-ripple {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+        }
+        
+        .ripple {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            animation: rippleEffect 3s ease-in-out infinite;
+        }
+        
+        .ripple:nth-child(1) { animation-delay: 0s; }
+        .ripple:nth-child(2) { animation-delay: 1s; }
+        .ripple:nth-child(3) { animation-delay: 2s; }
+        
+        @keyframes rippleEffect {
+            0%, 100% { 
+                transform: scaleY(1) translateY(0);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: scaleY(3) translateY(-5px);
+                opacity: 0.6;
+            }
+        }
+        
         /* 棋盘图片背景 */
         #board-bg {
             position: absolute;
@@ -488,7 +570,16 @@
         </div>
         
         <div id="board-container">
-            <!-- 棋盘背景图 -->
+            <!-- 水波纹效果 -->
+            <div class="water-border">
+                <div class="water-ripple">
+                    <div class="ripple"></div>
+                    <div class="ripple"></div>
+                    <div class="ripple"></div>
+                </div>
+            </div>
+            
+            <!-- 棋盘SVG -->
             <svg id="xiangqi-board" viewBox="0 0 700 800">
                 <defs>
                     <!-- 3D红方棋子渐变 -->
@@ -642,6 +733,62 @@
             toggleMute() {
                 this.isMuted = !this.isMuted;
                 document.getElementById('muteBtn').textContent = this.isMuted ? '🔇' : '🔊';
+                if (this.waterSoundInterval) {
+                    clearInterval(this.waterSoundInterval);
+                    this.waterSoundInterval = null;
+                }
+            },
+            
+            // 流水声音效 - 间歇性播放
+            startWaterSound() {
+                if (this.isMuted) return;
+                
+                const playWaterSound = () => {
+                    if (this.isMuted || !this.audioContext) return;
+                    
+                    // 创建白噪音模拟水流声
+                    const bufferSize = this.audioContext.sampleRate * 2; // 2秒缓冲
+                    const buffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    
+                    // 生成白噪音
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+                    
+                    // 创建低通滤波器让声音更像水流
+                    const filter = this.audioContext.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 400;
+                    filter.Q.value = 1;
+                    
+                    const noise = this.audioContext.createBufferSource();
+                    noise.buffer = buffer;
+                    
+                    const gainNode = this.audioContext.createGain();
+                    gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.03, this.audioContext.currentTime + 0.5);
+                    gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 2);
+                    
+                    noise.connect(filter);
+                    filter.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
+                    
+                    noise.start(this.audioContext.currentTime);
+                    noise.stop(this.audioContext.currentTime + 2);
+                };
+                
+                // 随机间隔播放 (8-20秒之间)
+                const scheduleNext = () => {
+                    if (this.isMuted) return;
+                    const delay = 8000 + Math.random() * 12000;
+                    this.waterSoundTimeout = setTimeout(() => {
+                        playWaterSound();
+                        scheduleNext();
+                    }, delay);
+                };
+                
+                scheduleNext();
             }
         };
         
@@ -854,10 +1001,19 @@
             renderBoard();
             updateStatus();
             updateMoveHistory();
+            
+            // 启动流水声
+            AudioManager.startWaterSound();
         }
         
         // 退出游戏
         function exitGame() {
+            // 停止流水声
+            if (AudioManager.waterSoundTimeout) {
+                clearTimeout(AudioManager.waterSoundTimeout);
+                AudioManager.waterSoundTimeout = null;
+            }
+            
             document.getElementById('gameContainer').style.display = 'none';
             document.getElementById('loginPanel').style.display = 'block';
             GameState.room = null;
