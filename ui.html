@@ -811,6 +811,8 @@
         
         // Minimax搜索
         function minimax(depth, alpha, beta, isMaximizing) {
+            searchNodeCount++;
+            
             if (depth === 0) {
                 return evaluateBoard();
             }
@@ -886,6 +888,8 @@
         
         // 获取最佳移动
         function getBestMove(depth) {
+            let nodeCount = 0;
+            
             const moves = [];
             
             for (let r = 0; r < 10; r++) {
@@ -929,6 +933,9 @@
             return bestMove;
         }
         
+        // 用于统计的变量
+        let searchNodeCount = 0;
+        
         // AI走棋
         function makeAIMove() {
             const difficulty = parseInt(document.getElementById('difficulty').value);
@@ -970,24 +977,35 @@
                 const topMoves = scoredMoves.slice(0, Math.min(5, scoredMoves.length));
                 const selected = topMoves[Math.floor(Math.random() * topMoves.length)].move;
                 
-                executeMove(selected);
+                updateStatus(`AI思考中... (入门难度，随机选择)`, true);
+                
+                setTimeout(() => {
+                    executeMove(selected);
+                }, 300);
                 return;
             }
             
             // 中级及以上使用Minimax搜索
-            const startTime = Date.now();
-            const bestMove = getBestMove(depth);
-            const endTime = Date.now();
+            updateStatus(`AI思考中... (深度${depth})`, true);
             
-            console.log(`AI思考深度${depth}，用时${endTime - startTime}ms`);
-            
-            if (bestMove) {
-                executeMove(bestMove);
-            } else {
-                updateStatus('AI无法移动，你赢了！');
-                isThinking = false;
-                clearMoveLines();
-            }
+            // 使用setTimeout让UI有时间更新
+            setTimeout(() => {
+                const startTime = Date.now();
+                searchNodeCount = 0;
+                const bestMove = getBestMove(depth);
+                const endTime = Date.now();
+                const timeUsed = endTime - startTime;
+                
+                console.log(`AI思考深度${depth}，用时${timeUsed}ms，节点数${searchNodeCount}`);
+                
+                if (bestMove) {
+                    executeMove(bestMove);
+                } else {
+                    updateStatus('AI无法移动，你赢了！');
+                    isThinking = false;
+                    clearMoveLines();
+                }
+            }, 100);
         }
         
         // 执行移动
