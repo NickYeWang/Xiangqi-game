@@ -470,33 +470,33 @@
             position: relative;
             width: 850px;
             height: 950px;
-            background: linear-gradient(145deg, #D2691E, #8B4513);
-            border-radius: 20px;
+            background: linear-gradient(145deg, #C19A6B, #8B6914);
+            border-radius: 15px;
             padding: 40px;
             box-shadow: 
-                0 20px 60px rgba(0,0,0,0.5),
+                0 25px 70px rgba(0,0,0,0.6),
                 inset 0 3px 10px rgba(255,255,255,0.2);
-            border: 8px solid #5D3A1A;
+            border: 10px solid #5D3A1A;
         }
         
         /* 棋盘表面木纹 */
         #board-container::before {
             content: '';
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 120px;
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            bottom: 130px;
             background: 
                 repeating-linear-gradient(
-                    0deg,
-                    #DEB887,
-                    #DEB887 2px,
-                    #D2B48C 2px,
-                    #D2B48C 4px
+                    90deg,
+                    #D4A574 0px,
+                    #D4A574 3px,
+                    #C49464 3px,
+                    #C49464 6px
                 );
-            border-radius: 10px;
-            opacity: 0.8;
+            border-radius: 8px;
+            opacity: 0.9;
         }
         
         /* 水波纹效果 */
@@ -556,21 +556,25 @@
         /* 楚河汉界文字 */
         .river-text {
             position: absolute;
-            top: 50%;
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 200px;
+            gap: 150px;
             pointer-events: none;
             z-index: 5;
         }
         
         .river-text span {
-            font-size: 48px;
-            color: #8B4513;
+            font-size: 52px;
+            color: #6B4423;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
-            opacity: 0.7;
+            text-shadow: 
+                2px 2px 4px rgba(255,255,255,0.9),
+                -1px -1px 1px rgba(0,0,0,0.1);
+            opacity: 0.85;
+            font-family: STKaiti, KaiTi, serif;
+            letter-spacing: 6px;
         }
         
         #xiangqi-board {
@@ -821,29 +825,28 @@
                 </defs>
                 
                 <!-- 网格线 -->
-                <g stroke="#5c3a1e" stroke-width="2">
-                    <!-- 竖线 -->
-                    <!-- 上半部分 -->
-                    <line x1="35" y1="35" x2="35" y2="382"/>
-                    <line x1="118" y1="35" x2="118" y2="382"/>
-                    <line x1="201" y1="35" x2="201" y2="382"/>
-                    <line x1="284" y1="35" x2="284" y2="382"/>
-                    <line x1="350" y1="35" x2="350" y2="382"/>
-                    <line x1="416" y1="35" x2="416" y2="382"/>
-                    <line x1="499" y1="35" x2="499" y2="382"/>
-                    <line x1="582" y1="35" x2="582" y2="382"/>
-                    <line x1="665" y1="35" x2="665" y2="382"/>
+                <g stroke="#5c3a1e" stroke-width="2.5">
+                    <!-- 竖线 - 上半部分（楚河汉界处断开） -->
+                    <line x1="35" y1="35" x2="35" y2="380"/>
+                    <line x1="118" y1="35" x2="118" y2="380"/>
+                    <line x1="201" y1="35" x2="201" y2="380"/>
+                    <line x1="284" y1="35" x2="284" y2="380"/>
+                    <line x1="350" y1="35" x2="350" y2="380"/>
+                    <line x1="416" y1="35" x2="416" y2="380"/>
+                    <line x1="499" y1="35" x2="499" y2="380"/>
+                    <line x1="582" y1="35" x2="582" y2="380"/>
+                    <line x1="665" y1="35" x2="665" y2="380"/>
                     
-                    <!-- 下半部分 -->
-                    <line x1="35" y1="418" x2="35" y2="765"/>
-                    <line x1="118" y1="418" x2="118" y2="765"/>
-                    <line x1="201" y1="418" x2="201" y2="765"/>
-                    <line x1="284" y1="418" x2="284" y2="765"/>
-                    <line x1="350" y1="418" x2="350" y2="765"/>
-                    <line x1="416" y1="418" x2="416" y2="765"/>
-                    <line x1="499" y1="418" x2="499" y2="765"/>
-                    <line x1="582" y1="418" x2="582" y2="765"/>
-                    <line x1="665" y1="418" x2="665" y2="765"/>
+                    <!-- 竖线 - 下半部分（楚河汉界处断开） -->
+                    <line x1="35" y1="420" x2="35" y2="765"/>
+                    <line x1="118" y1="420" x2="118" y2="765"/>
+                    <line x1="201" y1="420" x2="201" y2="765"/>
+                    <line x1="284" y1="420" x2="284" y2="765"/>
+                    <line x1="350" y1="420" x2="350" y2="765"/>
+                    <line x1="416" y1="420" x2="416" y2="765"/>
+                    <line x1="499" y1="420" x2="499" y2="765"/>
+                    <line x1="582" y1="420" x2="582" y2="765"/>
+                    <line x1="665" y1="420" x2="665" y2="765"/>
                     
                     <!-- 横线 -->
                     <line x1="35" y1="35" x2="665" y2="35"/>
