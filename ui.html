@@ -746,18 +746,85 @@
             setTimeout(makeAIMove, 500);
         }
         
-        // AI走棋
-        function makeAIMove() {
-            const difficulty = parseInt(document.getElementById('difficulty').value);
-            const allMoves = [];
+        // 评估函数 - 更复杂的局面评估
+        function evaluateBoard() {
+            let score = 0;
+            const pieceValues = { p: 10, c: 45, n: 40, r: 90, b: 20, a: 20, k: 10000 };
+            
+            // 棋子位置加成表
+            const pawnPos = [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [20, 20, 20, 25, 25, 25, 20, 20, 20],
+                [30, 30, 30, 40, 40, 40, 30, 30, 30],
+                [40, 40, 40, 50, 50, 50, 40, 40, 40],
+                [50, 50, 50, 60, 60, 60, 50, 50, 50],
+                [60, 60, 60, 70, 70, 70, 60, 60, 60],
+                [70, 70, 70, 80, 80, 80, 70, 70, 70],
+                [90, 90, 90, 100, 100, 100, 90, 90, 90]
+            ];
+            
+            const centerPos = [
+                [5, 5, 10, 15, 20, 15, 10, 5, 5],
+                [5, 10, 15, 20, 25, 20, 15, 10, 5],
+                [10, 15, 20, 25, 30, 25, 20, 15, 10],
+                [10, 15, 20, 30, 35, 30, 20, 15, 10],
+                [10, 15, 20, 25, 30, 25, 20, 15, 10],
+                [10, 15, 20, 25, 30, 25, 20, 15, 10],
+                [10, 15, 20, 30, 35, 30, 20, 15, 10],
+                [10, 15, 20, 25, 30, 25, 20, 15, 10],
+                [5, 10, 15, 20, 25, 20, 15, 10, 5],
+                [5, 5, 10, 15, 20, 15, 10, 5, 5]
+            ];
             
             for (let r = 0; r < 10; r++) {
                 for (let c = 0; c < 9; c++) {
                     const piece = board[r][c];
-                    if (piece !== '.' && getPieceColor(piece) === 'black') {
-                        const moves = getValidMoves(r, c);
-                        for (const m of moves) {
-                            allMoves.push({
+                    if (piece === '.') continue;
+                    
+                    const isRed = piece === piece.toUpperCase();
+                    const p = piece.toLowerCase();
+                    let value = pieceValues[p] || 0;
+                    
+                    // 位置加成
+                    if (p === 'p') {
+                        value += isRed ? pawnPos[r][c] : pawnPos[9-r][c];
+                    } else {
+                        value += centerPos[r][c];
+                    }
+                    
+                    // 机动性加成
+                    const moves = getValidMoves(r, c);
+                    value += moves.length * 2;
+                    
+                    if (isRed) {
+                        score += value;
+                    } else {
+                        score -= value;
+                    }
+                }
+            }
+            
+            return score; // 正值对红方有利，负值对黑方有利
+        }
+        
+        // Minimax搜索
+        function minimax(depth, alpha, beta, isMaximizing) {
+            if (depth === 0) {
+                return evaluateBoard();
+            }
+            
+            const color = isMaximizing ? 'red' : 'black';
+            const moves = [];
+            
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const piece = board[r][c];
+                    if (piece !== '.' && getPieceColor(piece) === color) {
+                        const validMoves = getValidMoves(r, c);
+                        for (const m of validMoves) {
+                            moves.push({
                                 from: {row: r, col: c},
                                 to: m,
                                 piece: piece,
@@ -768,58 +835,178 @@
                 }
             }
             
-            if (allMoves.length === 0) {
-                updateStatus('AI无法移动，你赢了！');
-                isThinking = false;
-                clearMoveLines();
+            // 按吃子价值排序，提高剪枝效率
+            moves.sort((a, b) => {
+                const values = {p: 10, c: 45, n: 40, r: 90, b: 20, a: 20, k: 10000};
+                const va = a.captured !== '.' ? values[a.captured.toLowerCase()] || 0 : 0;
+                const vb = b.captured !== '.' ? values[b.captured.toLowerCase()] || 0 : 0;
+                return vb - va;
+            });
+            
+            if (moves.length === 0) {
+                return isMaximizing ? -100000 + (10 - depth) : 100000 - (10 - depth);
+            }
+            
+            if (isMaximizing) {
+                let maxEval = -Infinity;
+                for (const move of moves) {
+                    const captured = board[move.to.row][move.to.col];
+                    board[move.to.row][move.to.col] = move.piece;
+                    board[move.from.row][move.from.col] = '.';
+                    
+                    const eval_ = minimax(depth - 1, alpha, beta, false);
+                    
+                    board[move.from.row][move.from.col] = move.piece;
+                    board[move.to.row][move.to.col] = captured;
+                    
+                    maxEval = Math.max(maxEval, eval_);
+                    alpha = Math.max(alpha, eval_);
+                    if (beta <= alpha) break;
+                }
+                return maxEval;
+            } else {
+                let minEval = Infinity;
+                for (const move of moves) {
+                    const captured = board[move.to.row][move.to.col];
+                    board[move.to.row][move.to.col] = move.piece;
+                    board[move.from.row][move.from.col] = '.';
+                    
+                    const eval_ = minimax(depth - 1, alpha, beta, true);
+                    
+                    board[move.from.row][move.from.col] = move.piece;
+                    board[move.to.row][move.to.col] = captured;
+                    
+                    minEval = Math.min(minEval, eval_);
+                    beta = Math.min(beta, eval_);
+                    if (beta <= alpha) break;
+                }
+                return minEval;
+            }
+        }
+        
+        // 获取最佳移动
+        function getBestMove(depth) {
+            const moves = [];
+            
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const piece = board[r][c];
+                    if (piece !== '.' && getPieceColor(piece) === 'black') {
+                        const validMoves = getValidMoves(r, c);
+                        for (const m of validMoves) {
+                            moves.push({
+                                from: {row: r, col: c},
+                                to: m,
+                                piece: piece,
+                                captured: board[m.row][m.col]
+                            });
+                        }
+                    }
+                }
+            }
+            
+            if (moves.length === 0) return null;
+            
+            let bestMove = null;
+            let bestEval = Infinity;
+            
+            for (const move of moves) {
+                const captured = board[move.to.row][move.to.col];
+                board[move.to.row][move.to.col] = move.piece;
+                board[move.from.row][move.from.col] = '.';
+                
+                const eval_ = minimax(depth - 1, -Infinity, Infinity, true);
+                
+                board[move.from.row][move.from.col] = move.piece;
+                board[move.to.row][move.to.col] = captured;
+                
+                if (eval_ < bestEval) {
+                    bestEval = eval_;
+                    bestMove = move;
+                }
+            }
+            
+            return bestMove;
+        }
+        
+        // AI走棋
+        function makeAIMove() {
+            const difficulty = parseInt(document.getElementById('difficulty').value);
+            
+            // 根据难度设置搜索深度
+            const depths = { 1: 2, 2: 3, 3: 4, 4: 5 };
+            const depth = depths[difficulty] || 3;
+            
+            // 入门级加入随机性
+            if (difficulty === 1) {
+                const allMoves = [];
+                for (let r = 0; r < 10; r++) {
+                    for (let c = 0; c < 9; c++) {
+                        const piece = board[r][c];
+                        if (piece !== '.' && getPieceColor(piece) === 'black') {
+                            const moves = getValidMoves(r, c);
+                            for (const m of moves) {
+                                allMoves.push({
+                                    from: {row: r, col: c},
+                                    to: m,
+                                    piece: piece,
+                                    captured: board[m.row][m.col]
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                // 随机选择前5个最佳移动中的一个
+                const scoredMoves = allMoves.map(move => {
+                    let score = 0;
+                    if (move.captured !== '.') {
+                        const values = {p: 10, c: 45, n: 40, r: 90, b: 20, a: 20, k: 10000};
+                        score += values[move.captured.toLowerCase()] || 0;
+                    }
+                    return {move, score};
+                }).sort((a, b) => b.score - a.score);
+                
+                const topMoves = scoredMoves.slice(0, Math.min(5, scoredMoves.length));
+                const selected = topMoves[Math.floor(Math.random() * topMoves.length)].move;
+                
+                executeMove(selected);
                 return;
             }
             
-            const scoredMoves = allMoves.map(move => {
-                let score = 0;
-                if (move.captured !== '.') {
-                    const values = {p: 10, c: 45, n: 40, r: 90, b: 20, a: 20, k: 1000};
-                    score += values[move.captured.toLowerCase()] || 0;
-                }
-                const direction = move.piece === move.piece.toLowerCase() ? 1 : -1;
-                score += (move.to.row - move.from.row) * direction * 2;
-                const centerDist = Math.abs(move.to.col - 4);
-                score += (4 - centerDist) * 2;
-                return {move, score};
-            });
+            // 中级及以上使用Minimax搜索
+            const startTime = Date.now();
+            const bestMove = getBestMove(depth);
+            const endTime = Date.now();
             
-            scoredMoves.sort((a, b) => b.score - a.score);
+            console.log(`AI思考深度${depth}，用时${endTime - startTime}ms`);
             
-            let selectedMove;
-            if (difficulty === 1) {
-                const topMoves = scoredMoves.slice(0, Math.min(5, scoredMoves.length));
-                selectedMove = topMoves[Math.floor(Math.random() * topMoves.length)].move;
-            } else if (difficulty === 2) {
-                if (Math.random() < 0.8) {
-                    selectedMove = scoredMoves[0].move;
-                } else {
-                    selectedMove = scoredMoves[Math.floor(Math.random() * Math.min(3, scoredMoves.length))].move;
-                }
+            if (bestMove) {
+                executeMove(bestMove);
             } else {
-                selectedMove = scoredMoves[0].move;
+                updateStatus('AI无法移动，你赢了！');
+                isThinking = false;
+                clearMoveLines();
             }
+        }
+        
+        // 执行移动
+        function executeMove(move) {
+            drawMoveLine(move.from.row, move.from.col, move.to.row, move.to.col);
             
-            drawMoveLine(selectedMove.from.row, selectedMove.from.col, 
-                        selectedMove.to.row, selectedMove.to.col);
+            board[move.to.row][move.to.col] = move.piece;
+            board[move.from.row][move.from.col] = '.';
             
-            board[selectedMove.to.row][selectedMove.to.col] = selectedMove.piece;
-            board[selectedMove.from.row][selectedMove.from.col] = '.';
-            
-            lastMove = {from: selectedMove.from, to: selectedMove.to};
+            lastMove = {from: move.from, to: move.to};
             
             moveHistory.push({
-                piece: selectedMove.piece,
-                from: selectedMove.from,
-                to: selectedMove.to,
-                captured: selectedMove.captured
+                piece: move.piece,
+                from: move.from,
+                to: move.to,
+                captured: move.captured
             });
             
-            if (selectedMove.captured.toLowerCase() === 'k') {
+            if (move.captured.toLowerCase() === 'k') {
                 renderBoard();
                 gameOver = true;
                 setTimeout(() => {
