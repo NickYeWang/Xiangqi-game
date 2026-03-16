@@ -9,7 +9,7 @@
         
         body {
             font-family: STKaiti, KaiTi, "Microsoft YaHei", sans-serif;
-            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 30%, #F5F5DC 60%, #DEB887 100%);
+            background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
         
-        /* ========== 首页 ========== */
+        /* ========== 中国风首页 ========== */
         .landing-page {
             width: 100%;
             min-height: 100vh;
@@ -26,9 +26,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 40px 20px;
-            background: linear-gradient(to bottom, #2d5a4a 0%, #4a7c6f 30%, #87CEEB 60%, #E0F6FF 100%);
+            padding: 60px 20px;
+            background: linear-gradient(to bottom, #2c1810 0%, #4a2c1a 30%, #8b4513 60%, #d4a574 100%);
             position: relative;
+            overflow: hidden;
         }
         
         .landing-page::before {
@@ -37,134 +38,243 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 50%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><path fill="%232d5a4a" d="M0,200 Q300,100 600,150 T1200,200 L1200,0 L0,0 Z"/></svg>') no-repeat bottom;
-            background-size: cover;
-            opacity: 0.3;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="none" stroke="%23d4a574" stroke-width="0.5" opacity="0.1" x="0" y="0" width="100" height="100"/><pattern id="cloud" patternUnits="userSpaceOnUse" width="50" height="50"><path d="M10,25 Q15,15 25,20 T40,25" fill="none" stroke="%23d4a574" stroke-width="0.5" opacity="0.1"/></pattern></svg>');
+            pointer-events: none;
         }
         
+        /* 卷轴装饰 */
+        .scroll-decoration {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to right, transparent, rgba(139,69,19,0.3), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scroll-decoration::before,
+        .scroll-decoration::after {
+            content: '❖';
+            color: #d4a574;
+            font-size: 24px;
+            margin: 0 20px;
+            opacity: 0.6;
+        }
+        
+        /* 标题区 */
         .title-section {
             text-align: center;
-            margin-bottom: 50px;
-            padding: 30px 60px;
-            background: linear-gradient(135deg, rgba(139,69,19,0.95), rgba(160,82,45,0.95));
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            border: 4px solid #DAA520;
+            margin-bottom: 60px;
+            padding: 40px 80px;
+            background: linear-gradient(145deg, rgba(139,69,19,0.95), rgba(101,67,33,0.95));
+            border-radius: 15px;
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.5),
+                inset 0 2px 10px rgba(212,165,116,0.3),
+                0 0 0 4px #8b4513,
+                0 0 0 8px #d4a574;
+            border: 2px solid #d4a574;
             position: relative;
             z-index: 1;
         }
         
+        .title-section::before,
+        .title-section::after {
+            content: '象棋';
+            position: absolute;
+            font-size: 14px;
+            color: #d4a574;
+            opacity: 0.7;
+        }
+        
+        .title-section::before {
+            top: 10px;
+            left: 15px;
+        }
+        
+        .title-section::after {
+            bottom: 10px;
+            right: 15px;
+        }
+        
         .main-title {
-            font-size: 56px;
+            font-size: 72px;
             font-weight: 700;
-            color: #FFD700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            letter-spacing: 12px;
-            margin-bottom: 10px;
+            color: #ffd700;
+            text-shadow: 
+                0 0 10px rgba(255,215,0,0.5),
+                0 0 20px rgba(255,215,0,0.3),
+                4px 4px 8px rgba(0,0,0,0.5);
+            letter-spacing: 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, #ffd700, #d4a574);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .sub-title {
-            font-size: 20px;
-            color: #F5DEB3;
+            font-size: 24px;
+            color: #d4a574;
+            letter-spacing: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* 欢迎文字 */
+        .welcome-text {
+            font-size: 28px;
+            color: #d4a574;
+            margin-bottom: 50px;
+            font-weight: 600;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             letter-spacing: 8px;
         }
         
-        .welcome-text {
-            font-size: 24px;
-            color: #2d5a4a;
-            margin-bottom: 40px;
-            font-weight: 600;
-            z-index: 1;
-        }
-        
+        /* 模式选择区 */
         .mode-selection {
             display: flex;
-            gap: 60px;
-            margin-bottom: 40px;
+            gap: 80px;
+            margin-bottom: 50px;
             z-index: 1;
         }
         
         .mode-card {
-            width: 280px;
-            height: 380px;
-            background: linear-gradient(145deg, #F5DEB3, #DEB887);
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(145deg, #f5deb3, #d2b48c);
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.3),
+                inset 0 2px 10px rgba(255,255,255,0.3);
+            border: 3px solid transparent;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
+            overflow: hidden;
         }
         
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="none" stroke="%238b4513" stroke-width="0.5" opacity="0.1" x="5" y="5" width="90" height="90" rx="5"/></svg>');
+            pointer-events: none;
+        }
+        
+        /* 悬停效果 - 高亮 */
         .mode-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.4),
+                0 0 30px rgba(255,215,0,0.3),
+                inset 0 2px 10px rgba(255,255,255,0.3);
+            border-color: #ffd700;
         }
         
+        /* 选中状态 */
         .mode-card.selected {
-            border-color: #FFD700;
-            box-shadow: 0 0 30px rgba(255,215,0,0.6), 0 15px 40px rgba(0,0,0,0.3);
-            transform: translateY(-15px) scale(1.05);
+            border-color: #ffd700;
+            box-shadow: 
+                0 0 40px rgba(255,215,0,0.6),
+                0 20px 50px rgba(0,0,0,0.4);
+            transform: translateY(-20px) scale(1.05);
         }
         
         .mode-card.selected::after {
-            content: '✓ 已选中';
+            content: '✓ 已选择';
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #FFD700;
-            color: #8B4513;
-            padding: 5px 12px;
-            border-radius: 15px;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(145deg, #ffd700, #daa520);
+            color: #8b4513;
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 14px;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* 点击进入提示 */
+        .click-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #8b4513;
+            background: rgba(255,215,0,0.9);
+            padding: 8px 20px;
+            border-radius: 20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .mode-card:hover .click-hint,
+        .mode-card.selected .click-hint {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
         }
         
         .mode-icon {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(145deg, #8B4513, #A0522D);
+            width: 130px;
+            height: 130px;
+            background: linear-gradient(145deg, #8b4513, #654321);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
-            font-size: 60px;
-            border: 4px solid #DAA520;
+            margin-bottom: 30px;
+            font-size: 65px;
+            border: 4px solid #d4a574;
+            box-shadow: 
+                0 10px 25px rgba(0,0,0,0.3),
+                inset 0 3px 10px rgba(255,255,255,0.2);
         }
         
         .mode-card h3 {
-            font-size: 28px;
-            color: #8B4513;
-            margin-bottom: 15px;
+            font-size: 32px;
+            color: #8b4513;
+            margin-bottom: 20px;
             font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
         }
         
         .mode-card p {
-            font-size: 16px;
+            font-size: 18px;
             color: #654321;
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.8;
         }
         
+        /* 选择提示 */
         .selection-hint {
-            font-size: 22px;
-            color: #8B4513;
+            font-size: 26px;
+            color: #ffd700;
             font-weight: 600;
-            margin: 20px 0;
-            padding: 15px 40px;
-            background: rgba(255,215,0,0.3);
-            border-radius: 30px;
-            border: 2px dashed #DAA520;
+            margin: 30px 0;
+            padding: 18px 50px;
+            background: rgba(139,69,19,0.6);
+            border-radius: 35px;
+            border: 2px dashed #d4a574;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
         .selection-hint.show {
@@ -172,95 +282,186 @@
             transform: translateY(0);
         }
         
+        /* 进入按钮 */
         .enter-btn {
-            padding: 18px 80px;
-            font-size: 26px;
-            background: linear-gradient(145deg, #FFD700, #DAA520);
-            color: #8B4513;
+            padding: 22px 100px;
+            font-size: 30px;
+            background: linear-gradient(145deg, #ffd700, #daa520);
+            color: #8b4513;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 700;
-            letter-spacing: 8px;
-            box-shadow: 0 8px 25px rgba(218,165,32,0.5);
+            letter-spacing: 12px;
+            box-shadow: 
+                0 10px 30px rgba(218,165,32,0.5),
+                0 0 0 4px rgba(255,215,0,0.3);
             transition: all 0.3s ease;
             z-index: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .enter-btn:hover:not(:disabled)::before {
+            left: 100%;
         }
         
         .enter-btn:hover:not(:disabled) {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(218,165,32,0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(218,165,32,0.6),
+                0 0 0 4px rgba(255,215,0,0.5);
         }
         
         .enter-btn:disabled {
-            background: #ccc;
-            color: #666;
+            background: #666;
+            color: #999;
             cursor: not-allowed;
+            box-shadow: none;
         }
         
         /* ========== 房间面板 ========== */
         .room-panel {
             display: none;
             width: 100%;
-            max-width: 600px;
-            background: linear-gradient(145deg, #F5DEB3, #DEB887);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            border: 4px solid #8B4513;
+            max-width: 700px;
+            background: linear-gradient(145deg, #f5deb3, #deb887);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.4),
+                0 0 0 5px #8b4513,
+                0 0 0 10px #d4a574;
+            border: 3px solid #8b4513;
             margin: 50px auto;
+            position: relative;
+        }
+        
+        .room-panel::before {
+            content: '❖';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            color: #8b4513;
+            opacity: 0.3;
         }
         
         .room-panel h3 {
-            font-size: 32px;
-            color: #8B4513;
+            font-size: 36px;
+            color: #8b4513;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-size: 18px;
+            color: #8b4513;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
         
         .room-panel input {
             width: 100%;
-            padding: 15px 20px;
-            font-size: 18px;
-            border: 2px solid #8B4513;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            padding: 18px 25px;
+            font-size: 20px;
+            border: 3px solid #8b4513;
+            border-radius: 15px;
+            margin-bottom: 5px;
             font-family: inherit;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .room-panel input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(139,69,19,0.3);
+            border-color: #d4a574;
         }
         
         .room-panel button {
-            padding: 12px 30px;
-            font-size: 18px;
-            background: linear-gradient(145deg, #8B4513, #A0522D);
-            color: #FFD700;
+            padding: 15px 35px;
+            font-size: 20px;
+            background: linear-gradient(145deg, #8b4513, #654321);
+            color: #ffd700;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             cursor: pointer;
-            margin: 5px;
+            margin: 10px 8px;
             font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .room-panel button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .room-panel button.secondary {
+            background: linear-gradient(145deg, #888, #666);
+            color: white;
         }
         
         .room-list {
-            margin-top: 20px;
-            max-height: 250px;
+            margin-top: 30px;
+            max-height: 300px;
             overflow-y: auto;
-            background: rgba(255,255,255,0.5);
-            border-radius: 10px;
-            padding: 10px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #d4a574;
         }
         
         .room-item {
             background: rgba(139,69,19,0.1);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
+            padding: 20px;
+            margin: 12px 0;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .room-item:hover {
             background: rgba(139,69,19,0.2);
-            transform: translateX(5px);
+            transform: translateX(8px);
+            border-color: #8b4513;
+        }
+        
+        .room-item .room-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #8b4513;
+        }
+        
+        .room-item .room-status {
+            font-size: 14px;
+            color: #666;
+            background: #ffd700;
+            padding: 5px 12px;
+            border-radius: 10px;
         }
         
         /* ========== 游戏界面 ========== */
@@ -269,14 +470,15 @@
             width: 100%;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 30px;
             min-height: 100vh;
+            background: linear-gradient(to bottom, #2c1810, #4a2c1a);
         }
         
         .game-info {
             display: flex;
-            gap: 30px;
-            margin-bottom: 20px;
+            gap: 40px;
+            margin-bottom: 30px;
             align-items: center;
             flex-wrap: wrap;
             justify-content: center;
@@ -285,53 +487,82 @@
         .player-info {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 15px 25px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 15px;
-            border: 3px solid transparent;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            gap: 15px;
+            padding: 18px 30px;
+            background: rgba(245,222,179,0.95);
+            border-radius: 18px;
+            border: 4px solid transparent;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
         
         .player-info.active {
-            border-color: #FFD700;
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            border-color: #ffd700;
+            box-shadow: 0 0 30px rgba(255,215,0,0.6), 0 8px 25px rgba(0,0,0,0.3);
+            animation: activePulse 1.5s infinite;
+        }
+        
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 8px 25px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 0 35px rgba(255,215,0,0.8), 0 8px 25px rgba(0,0,0,0.3); }
         }
         
         .player-color {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             border: 3px solid #333;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
         }
         
-        .player-color.red { background: radial-gradient(circle at 30% 30%, #ff4444, #cc0000); }
-        .player-color.black { background: radial-gradient(circle at 30% 30%, #444, #000); }
+        .player-color.red { 
+            background: radial-gradient(circle at 30% 30%, #ff6666, #cc0000);
+        }
+        .player-color.black { 
+            background: radial-gradient(circle at 30% 30%, #666, #000);
+        }
         
-        .player-info span { font-size: 20px; font-weight: 600; color: #333; }
+        .player-info span { 
+            font-size: 22px; 
+            font-weight: 700; 
+            color: #333; 
+        }
         
         select, button {
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 10px;
-            border: 2px solid #8B4513;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 12px;
+            border: 3px solid #8b4513;
             font-family: inherit;
             cursor: pointer;
-            background: #F5DEB3;
-            color: #8B4513;
+            background: linear-gradient(145deg, #f5deb3, #deb887);
+            color: #8b4513;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
-        button:hover { background: #DEB887; }
-        button.secondary { background: #ccc; }
+        button:hover { 
+            background: linear-gradient(145deg, #deb887, #d2b48c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
         
-        /* ========== 棋盘 - 使用背景图 ========== */
+        button.secondary { 
+            background: linear-gradient(145deg, #999, #777);
+            color: white;
+            border-color: #666;
+        }
+        
+        /* ========== 棋盘 ========== */
         .board-wrapper {
             position: relative;
-            width: 900px;
-            height: 900px;
+            width: 850px;
+            height: 950px;
             display: flex;
             align-items: center;
             justify-content: center;
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
         }
         
         .board-bg {
@@ -342,6 +573,7 @@
             height: 100%;
             object-fit: contain;
             z-index: 0;
+            border-radius: 20px;
         }
         
         #xiangqi-board {
@@ -354,109 +586,221 @@
         /* ========== 3D棋子 ========== */
         .piece-group {
             cursor: pointer;
-            transition: transform 0.1s ease-out;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .piece-group:hover { transform: scale(1.12); }
+        .piece-group:hover { 
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 15px rgba(255,215,0,0.6));
+        }
         
         .piece-3d {
-            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.5));
+            filter: drop-shadow(4px 6px 10px rgba(0,0,0,0.6));
         }
         
         .piece-3d-red {
             fill: url(#red3DGradient);
             stroke: #8b0000;
-            stroke-width: 2;
+            stroke-width: 2.5;
         }
         
         .piece-3d-black {
             fill: url(#black3DGradient);
             stroke: #1a1a1a;
-            stroke-width: 2;
+            stroke-width: 2.5;
         }
         
         .piece-text-3d {
             font-family: STKaiti, KaiTi, serif;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             user-select: none;
             pointer-events: none;
         }
         
         .piece-text-3d-red { fill: #8b0000; }
-        .piece-text-3d-black { fill: #1a1a1a; }
+        .piece-text-3d-black { fill: #e0e0e0; }
         
+        /* 选中状态 */
         .piece-selected .piece-3d {
-            filter: drop-shadow(0 0 15px #FFD700) drop-shadow(3px 3px 6px rgba(0,0,0,0.5));
-            animation: pulseSelected 0.8s infinite;
+            filter: drop-shadow(0 0 20px #ffd700) drop-shadow(4px 6px 10px rgba(0,0,0,0.6));
+            animation: pulseSelected 1s infinite;
+        }
+        
+        .piece-selected {
+            transform: scale(1.1);
         }
         
         @keyframes pulseSelected {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.06); }
+            50% { transform: scale(1.08); }
         }
         
-        .move-line {
-            stroke: #FF6347;
-            stroke-width: 4;
-            stroke-linecap: round;
-            opacity: 0.8;
+        /* 走棋动画 */
+        .piece-moving {
+            animation: smoothMove 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
+        @keyframes smoothMove {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        /* 上次走棋标记 */
+        .last-move-marker {
+            fill: none;
+            stroke: #ffd700;
+            stroke-width: 3;
+            stroke-dasharray: 8,4;
+            opacity: 0.7;
+            animation: dashMove 2s linear infinite;
+        }
+        
+        @keyframes dashMove {
+            to { stroke-dashoffset: -24; }
+        }
+        
+        /* 状态栏 */
         .status-bar {
-            margin-top: 20px;
-            padding: 15px 50px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 15px;
-            font-size: 22px;
-            border: 3px solid #8B4513;
+            margin-top: 30px;
+            padding: 20px 60px;
+            background: rgba(245,222,179,0.95);
+            border-radius: 20px;
+            font-size: 26px;
+            border: 4px solid #8b4513;
             z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
-        .status-bar .turn { color: #8B4513; font-weight: 700; }
+        .status-bar .turn { 
+            color: #8b4513; 
+            font-weight: 700; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
         
+        /* 走法记录 */
         .move-history {
-            margin-top: 20px;
+            margin-top: 30px;
             max-width: 900px;
             width: 100%;
             z-index: 10;
         }
         
         .move-history h3 {
-            margin-bottom: 10px;
-            font-size: 20px;
-            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+            color: #d4a574;
             text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .moves-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            font-size: 16px;
-            max-height: 150px;
+            gap: 12px;
+            font-size: 18px;
+            max-height: 180px;
             overflow-y: auto;
-            background: rgba(255,255,255,0.8);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #8B4513;
+            background: rgba(245,222,179,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #8b4513;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
         .move-tag {
             background: rgba(139,69,19,0.15);
-            padding: 5px 12px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
         }
         
-        .move-tag.red { color: #c92a2a; }
-        .move-tag.black { color: #333; }
+        .move-tag.red { color: #c92a2a; background: rgba(201,42,42,0.1); }
+        .move-tag.black { color: #333; background: rgba(0,0,0,0.1); }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(139,69,19,0.1);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #8b4513;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #654321;
+        }
+        
+        /* 游戏结束弹窗 */
+        .game-over-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .game-over-modal.show {
+            display: flex;
+        }
+        
+        .game-over-content {
+            background: linear-gradient(145deg, #f5deb3, #deb887);
+            padding: 60px 80px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 0 5px #8b4513,
+                0 0 0 10px #d4a574;
+            animation: modalAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes modalAppear {
+            from { 
+                opacity: 0; 
+                transform: scale(0.8); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+        
+        .game-over-content h2 {
+            font-size: 48px;
+            color: #8b4513;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .game-over-content button {
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <!-- 首页 -->
     <div id="landingPage" class="landing-page">
+        <div class="scroll-decoration"></div>
+        
         <div class="title-section">
-            <div class="main-title">中国象棋</div>
+            <div class="main-title">Nick的中国象棋</div>
             <div class="sub-title">楚河汉界 · 运筹帷幄</div>
         </div>
         
@@ -467,16 +811,18 @@
                 <div class="mode-icon">🤖</div>
                 <h3>人机对战</h3>
                 <p>与AI对弈<br>挑战不同难度</p>
+                <div class="click-hint">👆 点击进入</div>
             </div>
             
             <div class="mode-card" id="pvpCard" onclick="selectMode('pvp')">
                 <div class="mode-icon">👥</div>
                 <h3>人人对战</h3>
                 <p>创建或加入房间<br>与好友对弈</p>
+                <div class="click-hint">👆 点击进入</div>
             </div>
         </div>
         
-        <div id="selectionHint" class="selection-hint">👆 请点击上方卡片选择游戏模式</div>
+        <div id="selectionHint" class="selection-hint">请点击上方卡片选择游戏模式</div>
         
         <button id="enterBtn" class="enter-btn" onclick="enterGame()" disabled>请先选择模式</button>
     </div>
@@ -484,13 +830,23 @@
     <!-- 房间面板 -->
     <div id="roomPanel" class="room-panel">
         <h3>🏠 游戏房间</h3>
-        <input type="text" id="username" placeholder="请输入您的名字">
-        <input type="text" id="roomName" placeholder="房间名称（创建或搜索）">
-        <div style="text-align: center; margin-top: 20px;">
+        
+        <div class="input-group">
+            <label>👤 您的名字</label>
+            <input type="text" id="username" placeholder="请输入您的名字" maxlength="10">
+        </div>
+        
+        <div class="input-group">
+            <label>🏠 房间名称</label>
+            <input type="text" id="roomName" placeholder="创建或搜索房间" maxlength="15">
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
             <button onclick="createRoom()">➕ 创建房间</button>
             <button onclick="searchRooms()">🔍 搜索房间</button>
             <button class="secondary" onclick="backToHome()">⬅️ 返回</button>
         </div>
+        
         <div class="room-list" id="roomList"></div>
     </div>
     
@@ -502,7 +858,7 @@
                 <span id="player1Name">红方</span>
             </div>
             
-            <select id="difficulty">
+            <select id="difficulty" onchange="onDifficultyChange()">
                 <option value="1">入门</option>
                 <option value="2" selected>业余</option>
                 <option value="3">高手</option>
@@ -520,21 +876,21 @@
         </div>
         
         <div class="board-wrapper">
-            <img src="board-bg.png" class="board-bg" alt="棋盘背景">
+            <img src="board-bg-clean.png" class="board-bg" alt="棋盘背景">
             
             <svg id="xiangqi-board" viewBox="0 0 700 800">
                 <defs>
                     <radialGradient id="red3DGradient" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" style="stop-color:#fff8f0"/>
-                        <stop offset="30%" style="stop-color:#ffcccc"/>
-                        <stop offset="60%" style="stop-color:#ff4444"/>
+                        <stop offset="0%" style="stop-color:#fff5f5"/>
+                        <stop offset="25%" style="stop-color:#ffcccc"/>
+                        <stop offset="55%" style="stop-color:#ff4444"/>
                         <stop offset="100%" style="stop-color:#cc0000"/>
                     </radialGradient>
                     
                     <radialGradient id="black3DGradient" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" style="stop-color:#666"/>
-                        <stop offset="30%" style="stop-color:#444"/>
-                        <stop offset="60%" style="stop-color:#222"/>
+                        <stop offset="0%" style="stop-color:#888"/>
+                        <stop offset="25%" style="stop-color:#555"/>
+                        <stop offset="55%" style="stop-color:#222"/>
                         <stop offset="100%" style="stop-color:#000"/>
                     </radialGradient>
                 </defs>
@@ -553,54 +909,114 @@
             <div id="moves-list" class="moves-list"></div>
         </div>
     </div>
+    
+    <!-- 游戏结束弹窗 -->
+    <div id="gameOverModal" class="game-over-modal">
+        <div class="game-over-content">
+            <h2 id="winnerText">🏆 红方获胜！</h2>
+            <button onclick="startNewGame()">🔄 再来一局</button>
+            <button class="secondary" onclick="exitGame()">🏠 返回主页</button>
+        </div>
+    </div>
 
     <script>
         // ========== 音频管理器 ==========
         const AudioManager = {
             isMuted: false,
             
-            // 播放"吃"音效 - 女声
+            // 播放"吃"音效 - 轻柔女声
             playCapture() {
                 if (this.isMuted) return;
-                const utterance = new SpeechSynthesisUtterance('吃');
-                utterance.lang = 'zh-CN';
-                utterance.pitch = 1.3;
-                utterance.rate = 0.8;
-                utterance.volume = 0.5;
-                speechSynthesis.speak(utterance);
+                try {
+                    const utterance = new SpeechSynthesisUtterance('吃');
+                    utterance.lang = 'zh-CN';
+                    utterance.pitch = 1.4;  // 较高音调 - 女声
+                    utterance.rate = 0.75;  // 稍慢 - 轻柔
+                    utterance.volume = 0.4; // 较低音量 - 轻柔
+                    
+                    // 尝试使用女声
+                    const voices = speechSynthesis.getVoices();
+                    const femaleVoice = voices.find(v => 
+                        v.name.includes('Female') || 
+                        v.name.includes('女') ||
+                        v.lang === 'zh-CN' && v.name.includes('Xiaoxiao')
+                    );
+                    if (femaleVoice) {
+                        utterance.voice = femaleVoice;
+                    }
+                    
+                    speechSynthesis.speak(utterance);
+                } catch (e) {
+                    console.log('语音播放失败:', e);
+                }
             },
             
             // 播放落子音效
             playMove() {
                 if (this.isMuted) return;
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.08);
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.1);
+                } catch (e) {
+                    console.log('音效播放失败:', e);
+                }
             },
             
             // 播放选择音效
             playSelect() {
                 if (this.isMuted) return;
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.05);
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.frequency.setValueAtTime(750, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.06);
+                } catch (e) {
+                    console.log('音效播放失败:', e);
+                }
+            },
+            
+            // 播放胜利音效
+            playWin() {
+                if (this.isMuted) return;
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const notes = [523.25, 659.25, 783.99, 1046.50]; // C-E-G-C
+                    notes.forEach((freq, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.15);
+                        gain.gain.setValueAtTime(0.15, audioCtx.currentTime + i * 0.15);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.15 + 0.3);
+                        osc.start(audioCtx.currentTime + i * 0.15);
+                        osc.stop(audioCtx.currentTime + i * 0.15 + 0.3);
+                    });
+                } catch (e) {
+                    console.log('音效播放失败:', e);
+                }
             }
         };
+        
+        // 预加载语音
+        if (speechSynthesis) {
+            speechSynthesis.getVoices();
+        }
 
         // ========== 游戏状态 ==========
         const GameState = {
@@ -613,7 +1029,9 @@
             lastMove: null,
             isThinking: false,
             gameOver: false,
-            players: { red: null, black: null }
+            players: { red: null, black: null },
+            playerSide: null,  // 当前用户在人人对战中的阵营
+            aiDifficulty: 2
         };
 
         // ========== 首页功能 ==========
@@ -624,12 +1042,14 @@
             selectedCard.classList.add('selected');
             
             const hint = document.getElementById('selectionHint');
-            hint.textContent = mode === 'ai' ? '🤖 已选择人机对战，点击开始进入' : '👥 已选择人人对战，点击开始进入';
+            hint.textContent = mode === 'ai' ? '🤖 已选择人机对战，点击进入' : '👥 已选择人人对战，点击进入';
             hint.classList.add('show');
             
             const enterBtn = document.getElementById('enterBtn');
             enterBtn.disabled = false;
             enterBtn.textContent = '点击进入';
+            
+            AudioManager.playSelect();
         }
         
         function enterGame() {
@@ -637,11 +1057,15 @@
                 alert('请先选择游戏模式');
                 return;
             }
+            
+            AudioManager.playSelect();
+            
             if (GameState.gameMode === 'ai') {
                 document.getElementById('landingPage').style.display = 'none';
                 document.getElementById('gameContainer').style.display = 'flex';
                 GameState.players.red = '玩家';
                 GameState.players.black = '电脑';
+                GameState.playerSide = 'red';
                 initGame();
             } else {
                 document.getElementById('landingPage').style.display = 'none';
@@ -652,52 +1076,120 @@
         function backToHome() {
             document.getElementById('roomPanel').style.display = 'none';
             document.getElementById('landingPage').style.display = 'flex';
+            GameState.gameMode = null;
+            document.querySelectorAll('.mode-card').forEach(card => card.classList.remove('selected'));
+            document.getElementById('selectionHint').classList.remove('show');
+            document.getElementById('enterBtn').disabled = true;
+            document.getElementById('enterBtn').textContent = '请先选择模式';
         }
         
         // ========== 房间系统 ==========
-        const rooms = [];
+        // 使用 localStorage 模拟房间数据
+        function getRooms() {
+            const rooms = localStorage.getItem('xiangqi_rooms');
+            return rooms ? JSON.parse(rooms) : [];
+        }
+        
+        function saveRooms(rooms) {
+            localStorage.setItem('xiangqi_rooms', JSON.stringify(rooms));
+        }
         
         function createRoom() {
             const username = document.getElementById('username').value.trim();
             const roomName = document.getElementById('roomName').value.trim();
-            if (!username || !roomName) {
-                alert('请输入名字和房间名称');
+            
+            if (!username) {
+                alert('请输入您的名字');
                 return;
             }
+            if (!roomName) {
+                alert('请输入房间名称');
+                return;
+            }
+            
+            const rooms = getRooms();
+            if (rooms.find(r => r.name === roomName)) {
+                alert('房间名称已存在，请换一个名称');
+                return;
+            }
+            
             GameState.currentUser = username;
+            GameState.playerSide = 'red';  // 创建者是红方
             GameState.players.red = username;
             GameState.players.black = '等待加入...';
-            rooms.push({ name: roomName, creator: username });
+            
+            rooms.push({ 
+                name: roomName, 
+                creator: username, 
+                createdAt: Date.now(),
+                status: 'waiting'
+            });
+            saveRooms(rooms);
+            
+            AudioManager.playSelect();
             document.getElementById('roomPanel').style.display = 'none';
             document.getElementById('gameContainer').style.display = 'flex';
             initGame();
+            
+            // 隐藏难度选择（人人对战不需要）
+            document.getElementById('difficulty').style.display = 'none';
         }
         
         function searchRooms() {
+            const rooms = getRooms();
             const roomList = document.getElementById('roomList');
-            if (rooms.length === 0) {
-                roomList.innerHTML = '<div style="text-align:center; padding:20px;">暂无房间，请创建新房间</div>';
+            
+            // 清理过期的房间（超过1小时）
+            const now = Date.now();
+            const activeRooms = rooms.filter(r => now - r.createdAt < 3600000);
+            if (activeRooms.length !== rooms.length) {
+                saveRooms(activeRooms);
+            }
+            
+            if (activeRooms.length === 0) {
+                roomList.innerHTML = '<div style="text-align:center; padding:30px; font-size:18px; color:#666;">暂无房间，请创建新房间</div>';
             } else {
-                roomList.innerHTML = rooms.map((r, i) => `
-                    <div class="room-item" onclick="joinRoom(${i})">
-                        ${r.name} - 房主: ${r.creator}
+                roomList.innerHTML = activeRooms.map((r, i) => `
+                    <div class="room-item" onclick="joinRoom('${r.name}')">
+                        <span class="room-name">${r.name}</span>
+                        <span class="room-status">房主: ${r.creator}</span>
                     </div>
                 `).join('');
             }
         }
         
-        function joinRoom(index) {
+        function joinRoom(roomName) {
             const username = document.getElementById('username').value.trim();
             if (!username) {
                 alert('请输入您的名字');
                 return;
             }
+            
+            const rooms = getRooms();
+            const room = rooms.find(r => r.name === roomName);
+            
+            if (!room) {
+                alert('房间不存在或已过期');
+                return;
+            }
+            
+            if (room.creator === username) {
+                alert('您不能加入自己创建的房间');
+                return;
+            }
+            
             GameState.currentUser = username;
-            GameState.players.red = rooms[index].creator;
+            GameState.playerSide = 'black';  // 加入者是黑方
+            GameState.players.red = room.creator;
             GameState.players.black = username;
+            
+            AudioManager.playSelect();
             document.getElementById('roomPanel').style.display = 'none';
             document.getElementById('gameContainer').style.display = 'flex';
             initGame();
+            
+            // 隐藏难度选择
+            document.getElementById('difficulty').style.display = 'none';
         }
         
         // ========== 游戏功能 ==========
@@ -705,6 +1197,7 @@
             document.getElementById('player1Name').textContent = GameState.players.red;
             document.getElementById('player2Name').textContent = GameState.players.black;
             
+            // 初始化棋盘
             GameState.board = [
                 ['r','n','b','a','k','a','b','n','r'],
                 ['.','.','.','.','.','.','.','.','.'],
@@ -725,6 +1218,9 @@
             GameState.isThinking = false;
             GameState.gameOver = false;
             
+            // 隐藏游戏结束弹窗
+            document.getElementById('gameOverModal').classList.remove('show');
+            
             renderBoard();
             updateStatus();
             updateMoveHistory();
@@ -739,8 +1235,28 @@
         
         function renderBoard() {
             const piecesLayer = document.getElementById('pieces-layer');
+            const moveLines = document.getElementById('move-lines');
             piecesLayer.innerHTML = '';
+            moveLines.innerHTML = '';
             
+            // 绘制上次走棋标记
+            if (GameState.lastMove) {
+                const fromCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                fromCircle.setAttribute('cx', GRID_X[GameState.lastMove.from.col]);
+                fromCircle.setAttribute('cy', GRID_Y[GameState.lastMove.from.row]);
+                fromCircle.setAttribute('r', '35');
+                fromCircle.setAttribute('class', 'last-move-marker');
+                moveLines.appendChild(fromCircle);
+                
+                const toCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                toCircle.setAttribute('cx', GRID_X[GameState.lastMove.to.col]);
+                toCircle.setAttribute('cy', GRID_Y[GameState.lastMove.to.row]);
+                toCircle.setAttribute('r', '35');
+                toCircle.setAttribute('class', 'last-move-marker');
+                moveLines.appendChild(toCircle);
+            }
+            
+            // 绘制棋子
             for (let row = 0; row < 10; row++) {
                 for (let col = 0; col < 9; col++) {
                     const piece = GameState.board[row][col];
@@ -749,6 +1265,8 @@
                         const isRed = piece === piece.toUpperCase();
                         g.setAttribute('class', 'piece-group');
                         g.setAttribute('transform', `translate(${GRID_X[col]}, ${GRID_Y[row]})`);
+                        g.dataset.row = row;
+                        g.dataset.col = col;
                         
                         if (GameState.selectedPiece && 
                             GameState.selectedPiece.row === row && 
@@ -758,22 +1276,31 @@
                         
                         // 3D棋子圆形
                         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                        circle.setAttribute('r', '30');
+                        circle.setAttribute('r', '32');
                         circle.setAttribute('class', isRed ? 'piece-3d-red' : 'piece-3d-black');
                         g.appendChild(circle);
                         
+                        // 内圈装饰
+                        const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        innerCircle.setAttribute('r', '26');
+                        innerCircle.setAttribute('fill', 'none');
+                        innerCircle.setAttribute('stroke', isRed ? '#ff9999' : '#666');
+                        innerCircle.setAttribute('stroke-width', '1');
+                        innerCircle.setAttribute('opacity', '0.5');
+                        g.appendChild(innerCircle);
+                        
                         // 高光
                         const shine = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-                        shine.setAttribute('cx', '-10');
-                        shine.setAttribute('cy', '-10');
-                        shine.setAttribute('rx', '15');
-                        shine.setAttribute('ry', '10');
-                        shine.setAttribute('fill', 'rgba(255,255,255,0.3)');
+                        shine.setAttribute('cx', '-12');
+                        shine.setAttribute('cy', '-12');
+                        shine.setAttribute('rx', '18');
+                        shine.setAttribute('ry', '12');
+                        shine.setAttribute('fill', 'rgba(255,255,255,0.35)');
                         g.appendChild(shine);
                         
                         // 文字
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        text.setAttribute('y', '8');
+                        text.setAttribute('y', '9');
                         text.setAttribute('text-anchor', 'middle');
                         text.setAttribute('class', `piece-text-3d piece-text-3d-${isRed ? 'red' : 'black'}`);
                         text.textContent = PIECES_NAME[piece];
@@ -793,11 +1320,10 @@
         function onPieceClick(row, col) {
             if (GameState.isThinking || GameState.gameOver) return;
             
-            // 检查是否是当前玩家的回合（人人对战）
+            // 人人对战：检查是否轮到自己走
             if (GameState.gameMode === 'pvp') {
-                const currentPlayer = GameState.currentTurn === 'red' ? GameState.players.red : GameState.players.black;
-                if (currentPlayer !== GameState.currentUser && GameState.players.black !== '电脑') {
-                    return;
+                if (GameState.currentTurn !== GameState.playerSide) {
+                    return;  // 不是自己的回合
                 }
             }
             
@@ -853,7 +1379,7 @@
                     if (r >= 0 && r < 10 && c >= 0 && c < 9) {
                         const blockR = row + (dr > 0 ? 1 : -1) * (Math.abs(dr) === 2 ? 1 : 0);
                         const blockC = col + (dc > 0 ? 1 : -1) * (Math.abs(dc) === 2 ? 0 : 1);
-                        const blocker = Math.abs(dr) === 2 ? GameState.board[blockR]?.[col] : GameState.board[row]?.[blockC];
+                        const blocker = Math.abs(dr) === 2 ? (GameState.board[blockR]?.[col] || '.') : (GameState.board[row]?.[blockC] || '.');
                         if (blocker === '.') {
                             const target = GameState.board[r][c];
                             if (target === '.' || (target === target.toUpperCase() ? 'red' : 'black') !== (isRed ? 'red' : 'black')) {
@@ -938,7 +1464,7 @@
                     if (r >= 0 && r < 10 && c >= 0 && c < 9) {
                         if (isRed && r < 5) continue;
                         if (!isRed && r > 4) continue;
-                        if (GameState.board[row + dr/2][col + dc/2] !== '.') continue;
+                        if (GameState.board[row + dr/2]?.[col + dc/2] !== '.') continue;
                         const target = GameState.board[r][c];
                         if (target === '.' || (target === target.toUpperCase() ? 'red' : 'black') !== (isRed ? 'red' : 'black')) {
                             moves.push({row: r, col: c});
@@ -983,7 +1509,7 @@
                 renderBoard();
                 GameState.gameOver = true;
                 const winner = GameState.currentTurn === 'red' ? GameState.players.red : GameState.players.black;
-                setTimeout(() => alert(`${winner}获胜！`), 100);
+                showGameOver(winner);
                 return;
             }
             
@@ -996,12 +1522,24 @@
             if (GameState.gameMode === 'ai' && GameState.currentTurn === 'black' && !GameState.gameOver) {
                 GameState.isThinking = true;
                 updateStatus();
-                setTimeout(makeAIMove, 500);
+                setTimeout(makeAIMove, 600);
             }
         }
         
+        function showGameOver(winner) {
+            const modal = document.getElementById('gameOverModal');
+            const winnerText = document.getElementById('winnerText');
+            winnerText.textContent = `🏆 ${winner} 获胜！`;
+            modal.classList.add('show');
+            AudioManager.playWin();
+        }
+        
+        function onDifficultyChange() {
+            GameState.aiDifficulty = parseInt(document.getElementById('difficulty').value);
+        }
+        
         function makeAIMove() {
-            const difficulty = parseInt(document.getElementById('difficulty').value);
+            const difficulty = GameState.aiDifficulty;
             const moves = [];
             
             for (let r = 0; r < 10; r++) {
@@ -1044,6 +1582,8 @@
                 selected = top[Math.floor(Math.random() * top.length)].move;
             } else if (difficulty === 2) {
                 selected = Math.random() < 0.8 ? scored[0].move : scored[Math.floor(Math.random() * Math.min(3, scored.length))].move;
+            } else if (difficulty === 3) {
+                selected = scored[0].move;
             } else {
                 selected = scored[0].move;
             }
@@ -1065,7 +1605,12 @@
             }
             
             const currentPlayer = GameState.currentTurn === 'red' ? GameState.players.red : GameState.players.black;
-            statusEl.textContent = `${currentPlayer}的回合`;
+            
+            if (GameState.gameMode === 'ai' && GameState.currentTurn === 'black') {
+                statusEl.textContent = '电脑思考中...';
+            } else {
+                statusEl.textContent = `${currentPlayer} 的回合`;
+            }
             
             if (GameState.currentTurn === 'red') {
                 p1Info.classList.add('active');
@@ -1089,41 +1634,64 @@
                 tag.textContent = `${num}${side} ${PIECES_NAME[move.piece]}${colNames[move.from.col]}${move.from.row}-${colNames[move.to.col]}${move.to.row}`;
                 listEl.appendChild(tag);
             });
+            
+            // 自动滚动到底部
+            listEl.scrollTop = listEl.scrollHeight;
         }
         
-        function startNewGame() { initGame(); }
+        function startNewGame() { 
+            AudioManager.playSelect();
+            initGame(); 
+        }
         
         function undoMove() {
-            if (GameState.moveHistory.length < 2 || GameState.isThinking) return;
+            if (GameState.moveHistory.length < 2 || GameState.isThinking || GameState.gameOver) return;
             
-            for (let i = 0; i < 2 && GameState.moveHistory.length > 0; i++) {
+            // 人机对战：悔棋需要撤销两步
+            // 人人对战：只能悔棋自己的走法
+            const stepsToUndo = GameState.gameMode === 'ai' ? 2 : 1;
+            
+            for (let i = 0; i < stepsToUndo && GameState.moveHistory.length > 0; i++) {
                 const move = GameState.moveHistory.pop();
                 GameState.board[move.from.row][move.from.col] = move.piece;
                 GameState.board[move.to.row][move.to.col] = move.captured || '.';
             }
             
-            GameState.currentTurn = 'red';
+            GameState.currentTurn = GameState.gameMode === 'ai' ? 'red' : 
+                (GameState.moveHistory.length % 2 === 0 ? 'red' : 'black');
             GameState.selectedPiece = null;
             GameState.gameOver = false;
-            GameState.lastMove = GameState.moveHistory.length > 0 ? {
+            
+            const lastMove = GameState.moveHistory.length > 0 ? {
                 from: GameState.moveHistory[GameState.moveHistory.length - 1].from,
                 to: GameState.moveHistory[GameState.moveHistory.length - 1].to
             } : null;
+            GameState.lastMove = lastMove;
             
             renderBoard();
             updateStatus();
             updateMoveHistory();
+            AudioManager.playSelect();
         }
         
         function exitGame() {
+            AudioManager.playSelect();
             document.getElementById('gameContainer').style.display = 'none';
+            document.getElementById('gameOverModal').classList.remove('show');
             document.getElementById('landingPage').style.display = 'flex';
+            
             GameState.players = { red: null, black: null };
             GameState.gameMode = null;
+            GameState.playerSide = null;
+            
             document.querySelectorAll('.mode-card').forEach(card => card.classList.remove('selected'));
             document.getElementById('selectionHint').classList.remove('show');
             document.getElementById('enterBtn').disabled = true;
             document.getElementById('enterBtn').textContent = '请先选择模式';
+            document.getElementById('difficulty').style.display = 'inline-block';
+            document.getElementById('roomList').innerHTML = '';
+            document.getElementById('username').value = '';
+            document.getElementById('roomName').value = '';
         }
         
         document.getElementById('xiangqi-board').addEventListener('click', (e) => {
@@ -1135,6 +1703,21 @@
         
         // 初始化
         document.getElementById('enterBtn').textContent = '请先选择模式';
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (GameState.gameMode && document.getElementById('gameContainer').style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    exitGame();
+                } else if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    undoMove();
+                } else if (e.key === 'n' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    startNewGame();
+                }
+            }
+        });
     </script>
 </body>
 </html>
