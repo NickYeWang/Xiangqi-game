@@ -557,8 +557,8 @@
         /* ========== 棋盘 ========== */
         .board-wrapper {
             position: relative;
-            width: 850px;
-            height: 950px;
+            width: 950px;
+            height: 1050px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -578,8 +578,8 @@
         
         #xiangqi-board {
             position: relative;
-            width: 700px;
-            height: 800px;
+            width: 900px;
+            height: 1000px;
             z-index: 10;
         }
         
@@ -878,7 +878,7 @@
         <div class="board-wrapper">
             <img src="board-bg-clean.png" class="board-bg" alt="棋盘背景">
             
-            <svg id="xiangqi-board" viewBox="0 0 700 800">
+            <svg id="xiangqi-board" viewBox="0 0 900 1000">
                 <defs>
                     <radialGradient id="red3DGradient" cx="30%" cy="30%" r="70%">
                         <stop offset="0%" style="stop-color:#fff5f5"/>
@@ -1226,8 +1226,8 @@
             updateMoveHistory();
         }
         
-        const GRID_X = [35, 118, 201, 284, 350, 416, 499, 582, 665];
-        const GRID_Y = [35, 118, 201, 284, 350, 450, 533, 616, 699, 765];
+        const GRID_X = [45, 145, 245, 345, 450, 555, 655, 755, 855];
+        const GRID_Y = [45, 145, 245, 345, 450, 550, 650, 750, 850, 955];
         const PIECES_NAME = {
             K: '帅', A: '仕', B: '相', N: '傌', R: '俥', C: '炮', P: '兵',
             k: '将', a: '士', b: '象', n: '马', r: '車', c: '砲', p: '卒'
@@ -1276,13 +1276,13 @@
                         
                         // 3D棋子圆形
                         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                        circle.setAttribute('r', '32');
+                        circle.setAttribute('r', '40');
                         circle.setAttribute('class', isRed ? 'piece-3d-red' : 'piece-3d-black');
                         g.appendChild(circle);
                         
                         // 内圈装饰
                         const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                        innerCircle.setAttribute('r', '26');
+                        innerCircle.setAttribute('r', '32');
                         innerCircle.setAttribute('fill', 'none');
                         innerCircle.setAttribute('stroke', isRed ? '#ff9999' : '#666');
                         innerCircle.setAttribute('stroke-width', '1');
@@ -1291,16 +1291,16 @@
                         
                         // 高光
                         const shine = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-                        shine.setAttribute('cx', '-12');
-                        shine.setAttribute('cy', '-12');
-                        shine.setAttribute('rx', '18');
-                        shine.setAttribute('ry', '12');
+                        shine.setAttribute('cx', '-15');
+                        shine.setAttribute('cy', '-15');
+                        shine.setAttribute('rx', '22');
+                        shine.setAttribute('ry', '15');
                         shine.setAttribute('fill', 'rgba(255,255,255,0.35)');
                         g.appendChild(shine);
                         
                         // 文字
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        text.setAttribute('y', '9');
+                        text.setAttribute('y', '11');
                         text.setAttribute('text-anchor', 'middle');
                         text.setAttribute('class', `piece-text-3d piece-text-3d-${isRed ? 'red' : 'black'}`);
                         text.textContent = PIECES_NAME[piece];
