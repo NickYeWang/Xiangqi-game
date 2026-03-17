@@ -363,7 +363,7 @@
         </div>
         
         <div class="board-container">
-            <svg id="xiangqi-board" width="540" height="600" viewBox="0 0 540 600">
+            <svg id="xiangqi-board" width="1400" height="1600" viewBox="0 0 1400 1600" style="background: url('board-bg-clean.png') no-repeat center center; background-size: cover;">
                 <defs>
                     <!-- 棋子渐变 -->
                     <radialGradient id="redPiece" cx="30%" cy="30%" r="70%">
@@ -540,10 +540,10 @@
             document.getElementById('enterBtn').textContent = '请先选择模式';
         }
 
-        // 坐标定义 - 9x10网格，交叉点
-        const GRID_X = [30, 84, 138, 192, 246, 300, 354, 408, 462, 510]; // 实际上是9条线
-        const GRID_X_POINTS = [30, 84, 138, 192, 246, 300, 354, 408, 462]; // 9个交叉点
-        const GRID_Y_POINTS = [30, 84, 138, 192, 246, 354, 408, 462, 516, 570]; // 10个交叉点（中间是河界）
+        // 坐标定义 - 9x10网格，交叉点 (适配 1400x1600 背景图)
+        const GRID_X = [70, 225, 380, 535, 690, 845, 1000, 1155, 1310, 1465]; // 9条线
+        const GRID_X_POINTS = [70, 225, 380, 535, 690, 845, 1000, 1155, 1310]; // 9个交叉点
+        const GRID_Y_POINTS = [70, 230, 390, 550, 710, 870, 1030, 1190, 1350, 1510]; // 10个交叉点
         
         const PIECES_NAME = {
             'R': '車', 'N': '馬', 'B': '相', 'A': '仕', 'K': '帥', 'C': '炮', 'P': '兵',
@@ -603,26 +603,26 @@
                         
                         // 棋子圆形
                         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                        circle.setAttribute('r', '22');
+                        circle.setAttribute('r', '55');
                         circle.setAttribute('fill', isRed ? 'url(#redPiece)' : 'url(#blackPiece)');
                         circle.setAttribute('stroke', isRed ? '#990000' : '#000');
-                        circle.setAttribute('stroke-width', '1.5');
+                        circle.setAttribute('stroke-width', '3');
                         g.appendChild(circle);
                         
                         // 内圈高光
                         const highlight = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-                        highlight.setAttribute('cx', '-8');
-                        highlight.setAttribute('cy', '-8');
-                        highlight.setAttribute('rx', '10');
-                        highlight.setAttribute('ry', '6');
+                        highlight.setAttribute('cx', '-20');
+                        highlight.setAttribute('cy', '-20');
+                        highlight.setAttribute('rx', '25');
+                        highlight.setAttribute('ry', '15');
                         highlight.setAttribute('fill', 'rgba(255,255,255,0.3)');
                         g.appendChild(highlight);
                         
                         // 文字
                         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        text.setAttribute('y', '7');
+                        text.setAttribute('y', '18');
                         text.setAttribute('text-anchor', 'middle');
-                        text.setAttribute('font-size', '20');
+                        text.setAttribute('font-size', '48');
                         text.setAttribute('font-family', 'KaiTi, serif');
                         text.setAttribute('font-weight', 'bold');
                         text.setAttribute('fill', isRed ? '#ffcccc' : '#cccccc');
