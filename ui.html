@@ -282,13 +282,21 @@
             border-color: #666;
         }
 
-        /* 纯SVG棋盘 */
         .board-container {
             position: relative;
             background: #f5e6c8;
-            padding: 30px;
+            padding: 10px;
             border-radius: 10px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 100px rgba(139,69,19,0.1);
+            max-width: 95vw;
+            max-height: calc(100vh - 180px);
+            overflow: auto;
+        }
+        
+        #xiangqi-board {
+            display: block;
+            max-width: 100%;
+            max-height: calc(100vh - 200px);
         }
 
         .status-bar {
@@ -363,7 +371,7 @@
         </div>
         
         <div class="board-container">
-            <svg id="xiangqi-board" width="1400" height="1600" viewBox="0 0 1400 1600" style="background: url('board-bg-clean.png') no-repeat center center; background-size: cover;">
+            <svg id="xiangqi-board" width="1200" height="1400" viewBox="0 0 1200 1400" style="background: url('board-bg-clean.png') no-repeat center center; background-size: contain;">
                 <defs>
                     <!-- 棋子渐变 -->
                     <radialGradient id="redPiece" cx="30%" cy="30%" r="70%">
@@ -377,69 +385,6 @@
                         <stop offset="100%" style="stop-color:#000"/>
                     </radialGradient>
                 </defs>
-                
-                <!-- 棋盘背景 -->
-                <rect x="0" y="0" width="540" height="600" fill="#f5e6c8" rx="5"/>
-                
-                <!-- 棋盘边框 -->
-                <rect x="30" y="30" width="480" height="540" fill="none" stroke="#8b4513" stroke-width="2"/>
-                
-                <!-- 横线 -->
-                <g stroke="#8b4513" stroke-width="1">
-                    <line x1="30" y1="30" x2="510" y2="30"/>
-                    <line x1="30" y1="84" x2="510" y2="84"/>
-                    <line x1="30" y1="138" x2="510" y2="138"/>
-                    <line x1="30" y1="192" x2="510" y2="192"/>
-                    <line x1="30" y1="246" x2="510" y2="246"/>
-                    <!-- 楚河汉界 -->
-                    <line x1="30" y1="300" x2="240" y2="300"/>
-                    <line x1="300" y1="300" x2="510" y2="300"/>
-                    <line x1="30" y1="354" x2="510" y2="354"/>
-                    <line x1="30" y1="408" x2="510" y2="408"/>
-                    <line x1="30" y1="462" x2="510" y2="462"/>
-                    <line x1="30" y1="516" x2="510" y2="516"/>
-                    <line x1="30" y1="570" x2="510" y2="570"/>
-                </g>
-                
-                <!-- 竖线 -->
-                <g stroke="#8b4513" stroke-width="1">
-                    <!-- 上半部分 -->
-                    <line x1="30" y1="30" x2="30" y2="300"/>
-                    <line x1="84" y1="30" x2="84" y2="300"/>
-                    <line x1="138" y1="30" x2="138" y2="300"/>
-                    <line x1="192" y1="30" x2="192" y2="300"/>
-                    <line x1="246" y1="30" x2="246" y2="300"/>
-                    <line x1="300" y1="30" x2="300" y2="300"/>
-                    <line x1="354" y1="30" x2="354" y2="300"/>
-                    <line x1="408" y1="30" x2="408" y2="300"/>
-                    <line x1="462" y1="30" x2="462" y2="300"/>
-                    <line x1="510" y1="30" x2="510" y2="300"/>
-                    <!-- 下半部分 -->
-                    <line x1="30" y1="300" x2="30" y2="570"/>
-                    <line x1="84" y1="300" x2="84" y2="570"/>
-                    <line x1="138" y1="300" x2="138" y2="570"/>
-                    <line x1="192" y1="300" x2="192" y2="570"/>
-                    <line x1="246" y1="300" x2="246" y2="570"/>
-                    <line x1="300" y1="300" x2="300" y2="570"/>
-                    <line x1="354" y1="300" x2="354" y2="570"/>
-                    <line x1="408" y1="300" x2="408" y2="570"/>
-                    <line x1="462" y1="300" x2="462" y2="570"/>
-                    <line x1="510" y1="300" x2="510" y2="570"/>
-                </g>
-                
-                <!-- 九宫格斜线 -->
-                <g stroke="#8b4513" stroke-width="1">
-                    <!-- 上九宫 -->
-                    <line x1="192" y1="30" x2="300" y2="138"/>
-                    <line x1="300" y1="30" x2="192" y2="138"/>
-                    <!-- 下九宫 -->
-                    <line x1="192" y1="462" x2="300" y2="570"/>
-                    <line x1="300" y1="462" x2="192" y2="570"/>
-                </g>
-                
-                <!-- 楚河汉界文字 -->
-                <text x="180" y="285" font-size="24" fill="#8b4513" font-family="KaiTi, serif" font-weight="bold">楚 河</text>
-                <text x="360" y="285" font-size="24" fill="#8b4513" font-family="KaiTi, serif" font-weight="bold">汉 界</text>
                 
                 <!-- 棋子层 -->
                 <g id="pieces-layer"></g>
@@ -540,10 +485,9 @@
             document.getElementById('enterBtn').textContent = '请先选择模式';
         }
 
-        // 坐标定义 - 9x10网格，交叉点 (适配 1400x1600 背景图)
-        const GRID_X = [70, 225, 380, 535, 690, 845, 1000, 1155, 1310, 1465]; // 9条线
-        const GRID_X_POINTS = [70, 225, 380, 535, 690, 845, 1000, 1155, 1310]; // 9个交叉点
-        const GRID_Y_POINTS = [70, 230, 390, 550, 710, 870, 1030, 1190, 1350, 1510]; // 10个交叉点
+        // 坐标定义 - 9x10网格，交叉点 (适配 1200x1400 背景图)
+        const GRID_X_POINTS = [100, 225, 350, 475, 600, 725, 850, 975, 1100]; // 9个交叉点
+        const GRID_Y_POINTS = [100, 225, 350, 475, 600, 800, 925, 1050, 1175, 1300]; // 10个交叉点
         
         const PIECES_NAME = {
             'R': '車', 'N': '馬', 'B': '相', 'A': '仕', 'K': '帥', 'C': '炮', 'P': '兵',
