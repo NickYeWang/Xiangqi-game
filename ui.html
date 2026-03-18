@@ -305,6 +305,184 @@
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.1); }
         }
+        
+        /* ==================== 移动端适配 ==================== */
+        @media screen and (max-width: 768px) {
+            /* 首页适配 */
+            .landing-page {
+                padding: 10px;
+            }
+            
+            .title-section {
+                padding: 20px 30px;
+                margin-bottom: 20px;
+            }
+            
+            .main-title {
+                font-size: 36px;
+                letter-spacing: 8px;
+            }
+            
+            .sub-title {
+                font-size: 14px;
+                letter-spacing: 4px;
+            }
+            
+            .mode-selection {
+                flex-direction: column;
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .mode-card {
+                width: 200px;
+                height: 260px;
+                padding: 20px;
+            }
+            
+            .mode-icon {
+                font-size: 40px;
+            }
+            
+            .mode-card h3 {
+                font-size: 20px;
+            }
+            
+            .mode-card p {
+                font-size: 14px;
+            }
+            
+            .enter-btn {
+                padding: 14px 40px;
+                font-size: 18px;
+            }
+            
+            /* 游戏页面适配 */
+            .game-container.active {
+                flex-direction: column;
+                padding: 5px;
+                gap: 10px;
+            }
+            
+            /* 侧边栏改为水平布局放在底部 */
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                padding: 10px;
+                gap: 8px;
+                order: 2;
+            }
+            
+            .player-info-panel {
+                width: 80px;
+                padding: 8px;
+                flex-shrink: 0;
+            }
+            
+            .player-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+            
+            .player-name {
+                font-size: 12px;
+            }
+            
+            .game-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                flex: 1;
+            }
+            
+            .control-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+            
+            /* 棋盘适配 */
+            .board-wrapper {
+                padding: 8px;
+                order: 1;
+                max-width: 100%;
+            }
+            
+            #xiangqi-board {
+                max-height: calc(100vh - 180px);
+                max-width: 100vw;
+                width: 100%;
+                height: auto;
+            }
+            
+            /* 状态文字 */
+            #statusText {
+                padding: 8px !important;
+                font-size: 12px !important;
+            }
+        }
+        
+        /* 超小屏幕适配 */
+        @media screen and (max-width: 380px) {
+            .main-title {
+                font-size: 28px;
+                letter-spacing: 4px;
+            }
+            
+            .mode-card {
+                width: 160px;
+                height: 220px;
+            }
+            
+            .mode-icon {
+                font-size: 32px;
+            }
+            
+            .mode-card h3 {
+                font-size: 16px;
+            }
+            
+            .player-info-panel {
+                width: 70px;
+                padding: 6px;
+            }
+            
+            .player-avatar {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+            
+            .control-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+        }
+        
+        /* 横屏模式适配 */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .game-container.active {
+                flex-direction: row;
+            }
+            
+            .sidebar {
+                width: 120px;
+                flex-direction: column;
+                order: 0;
+            }
+            
+            .board-wrapper {
+                order: 0;
+            }
+            
+            #xiangqi-board {
+                max-height: 90vh;
+            }
+        }
     </style>
 </head>
 <body>
@@ -443,6 +621,11 @@
         
         const PIECE_RADIUS = 38;
         const FONT_SIZE = 32;
+        
+        // 检测是否为触摸设备
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+        // 移动端增大点击区域
+        const CLICK_THRESHOLD = isTouchDevice ? 70 : 50;
         
         // 选择游戏模式
         function selectMode(mode) {
@@ -735,7 +918,7 @@
                     const dy = clickY - GRID_Y[row];
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (dist < minDist && dist < 50) { // 50像素范围内才算点击到交叉点
+                    if (dist < minDist && dist < CLICK_THRESHOLD) { // 使用动态点击阈值
                         minDist = dist;
                         closestCol = col;
                         closestRow = row;
