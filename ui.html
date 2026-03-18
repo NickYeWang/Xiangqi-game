@@ -9,12 +9,69 @@
         
         body {
             font-family: STKaiti, KaiTi, "Microsoft YaHei", sans-serif;
-            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 50%, #B8E6F0 100%);
+            background: 
+                /* 水墨山峦背景 */
+                radial-gradient(ellipse 120% 80% at 20% 100%, rgba(100, 120, 100, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 70% at 80% 90%, rgba(80, 100, 90, 0.12) 0%, transparent 55%),
+                /* 小溪波纹效果 */
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(100, 150, 180, 0.03) 50px, rgba(100, 150, 180, 0.03) 52px),
+                repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(100, 150, 180, 0.02) 30px, rgba(100, 150, 180, 0.02) 32px),
+                /* 基础渐变 */
+                linear-gradient(135deg, #b8d4e3 0%, #d4e8f0 30%, #c8dce8 70%, #b0c8d8 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             color: #333;
             overflow: hidden;
+            position: relative;
+        }
+        
+        /* 中国风装饰元素 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                /* 茶碗 - 右下角 */
+                radial-gradient(ellipse 80px 60px at calc(100% - 120px) calc(100% - 100px), rgba(139, 90, 43, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60px 40px at calc(100% - 140px) calc(100% - 110px), rgba(160, 110, 60, 0.1) 0%, transparent 60%),
+                /* 茶杯 - 左下角 */
+                radial-gradient(ellipse 50px 40px at 80px calc(100% - 80px), rgba(180, 140, 100, 0.12) 0%, transparent 65%),
+                /* 荷叶 - 左上角 */
+                radial-gradient(ellipse 120px 100px at 60px 80px, rgba(60, 100, 60, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 80px 70px at 100px 60px, rgba(80, 120, 80, 0.06) 0%, transparent 65%),
+                /* 荷叶 - 右上角 */
+                radial-gradient(ellipse 100px 85px at calc(100% - 80px) 70px, rgba(70, 110, 70, 0.07) 0%, transparent 68%),
+                /* 竹影 */
+                linear-gradient(85deg, transparent 45%, rgba(40, 80, 40, 0.03) 50%, transparent 55%),
+                linear-gradient(95deg, transparent 40%, rgba(40, 80, 40, 0.02) 50%, transparent 60%),
+                /* 远处山峦 */
+                radial-gradient(ellipse 300px 150px at 30% 100%, rgba(80, 90, 100, 0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 250px 120px at 70% 100%, rgba(70, 85, 95, 0.08) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* 水墨晕染效果 */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                /* 右上角淡墨 */
+                radial-gradient(ellipse 200px 300px at 100% 0%, rgba(60, 60, 60, 0.05) 0%, transparent 70%),
+                /* 左下角淡墨 */
+                radial-gradient(ellipse 250px 200px at 0% 100%, rgba(50, 50, 50, 0.04) 0%, transparent 65%),
+                /* 中心淡雾 */
+                radial-gradient(ellipse 400px 400px at 50% 50%, rgba(100, 120, 130, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
         }
         
         /* 首页样式 */
@@ -120,6 +177,8 @@
             justify-content: center;
             padding: 10px;
             gap: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         .game-container.active {
@@ -318,12 +377,12 @@
                 
                 <!-- 九宫格斜线 -->
                 <g id="palace-lines" stroke="#333" stroke-width="2">
-                    <!-- 黑方九宫格斜线 -->
-                    <line x1="350" y1="50" x2="550" y2="250" />
-                    <line x1="750" y1="50" x2="550" y2="250" />
+                    <!-- 黑方九宫格斜线：士角到将的位置 -->
+                    <line x1="300" y1="50" x2="550" y2="300" />
+                    <line x1="800" y1="50" x2="550" y2="300" />
                     <!-- 红方九宫格斜线 -->
-                    <line x1="350" y1="1200" x2="550" y2="1000" />
-                    <line x1="750" y1="1200" x2="550" y2="1000" />
+                    <line x1="300" y1="1200" x2="550" y2="950" />
+                    <line x1="800" y1="1200" x2="550" y2="950" />
                 </g>
                 
                 <!-- 楚河汉界文字 -->
@@ -411,35 +470,65 @@
             const gridGroup = document.getElementById('board-grid');
             gridGroup.innerHTML = '';
             
-            // 横线 - 10条线，但在楚河汉界处断开
+            // 横线 - 10条线，但楚河汉界处(第4-5行之间)断开
             for (let i = 0; i < 10; i++) {
                 const y = GRID_Y[i];
-                // 左边5条线 (列0-3到列4)
-                const leftLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                leftLine.setAttribute('x1', GRID_X[0]);
-                leftLine.setAttribute('y1', y);
-                leftLine.setAttribute('x2', GRID_X[4]);
-                leftLine.setAttribute('y2', y);
-                gridGroup.appendChild(leftLine);
-                
-                // 右边5条线 (列4到列8)
-                const rightLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                rightLine.setAttribute('x1', GRID_X[4]);
-                rightLine.setAttribute('y1', y);
-                rightLine.setAttribute('x2', GRID_X[8]);
-                rightLine.setAttribute('y2', y);
-                gridGroup.appendChild(rightLine);
+                // 跳过楚河汉界中间的两行横线（第4行和第5行）
+                if (i === 4 || i === 5) {
+                    // 在楚河汉界区域只画左右两端的短线
+                    // 左边
+                    const leftLine1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    leftLine1.setAttribute('x1', GRID_X[0]);
+                    leftLine1.setAttribute('y1', y);
+                    leftLine1.setAttribute('x2', GRID_X[3]);
+                    leftLine1.setAttribute('y2', y);
+                    gridGroup.appendChild(leftLine1);
+                    
+                    // 右边
+                    const rightLine1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    rightLine1.setAttribute('x1', GRID_X[5]);
+                    rightLine1.setAttribute('y1', y);
+                    rightLine1.setAttribute('x2', GRID_X[8]);
+                    rightLine1.setAttribute('y2', y);
+                    gridGroup.appendChild(rightLine1);
+                } else {
+                    // 其他行画完整的横线（中间断开）
+                    // 左边 (列0-3到列4)
+                    const leftLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    leftLine.setAttribute('x1', GRID_X[0]);
+                    leftLine.setAttribute('y1', y);
+                    leftLine.setAttribute('x2', GRID_X[4]);
+                    leftLine.setAttribute('y2', y);
+                    gridGroup.appendChild(leftLine);
+                    
+                    // 右边 (列4到列8)
+                    const rightLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    rightLine.setAttribute('x1', GRID_X[4]);
+                    rightLine.setAttribute('y1', y);
+                    rightLine.setAttribute('x2', GRID_X[8]);
+                    rightLine.setAttribute('y2', y);
+                    gridGroup.appendChild(rightLine);
+                }
             }
             
-            // 竖线 - 9条线，全部贯通
+            // 竖线 - 9条线，但在楚河汉界处断开
             for (let i = 0; i < 9; i++) {
                 const x = GRID_X[i];
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', x);
-                line.setAttribute('y1', GRID_Y[0]);
-                line.setAttribute('x2', x);
-                line.setAttribute('y2', GRID_Y[9]);
-                gridGroup.appendChild(line);
+                // 上部分竖线 (黑方区域)
+                const topLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                topLine.setAttribute('x1', x);
+                topLine.setAttribute('y1', GRID_Y[0]);
+                topLine.setAttribute('x2', x);
+                topLine.setAttribute('y2', GRID_Y[4]);
+                gridGroup.appendChild(topLine);
+                
+                // 下部分竖线 (红方区域)
+                const bottomLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                bottomLine.setAttribute('x1', x);
+                bottomLine.setAttribute('y1', GRID_Y[5]);
+                bottomLine.setAttribute('x2', x);
+                bottomLine.setAttribute('y2', GRID_Y[9]);
+                gridGroup.appendChild(bottomLine);
             }
         }
         
