@@ -10,14 +10,15 @@
         body {
             font-family: STKaiti, KaiTi, "Microsoft YaHei", sans-serif;
             background: 
-                /* 水墨山峦背景 */
-                radial-gradient(ellipse 120% 80% at 20% 100%, rgba(100, 120, 100, 0.15) 0%, transparent 60%),
-                radial-gradient(ellipse 100% 70% at 80% 90%, rgba(80, 100, 90, 0.12) 0%, transparent 55%),
-                /* 小溪波纹效果 */
-                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(100, 150, 180, 0.03) 50px, rgba(100, 150, 180, 0.03) 52px),
-                repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(100, 150, 180, 0.02) 30px, rgba(100, 150, 180, 0.02) 32px),
-                /* 基础渐变 */
-                linear-gradient(135deg, #b8d4e3 0%, #d4e8f0 30%, #c8dce8 70%, #b0c8d8 100%);
+                /* 水墨山峦背景 - 更明显 */
+                radial-gradient(ellipse 150% 100% at 15% 100%, rgba(80, 110, 90, 0.25) 0%, transparent 65%),
+                radial-gradient(ellipse 120% 90% at 85% 95%, rgba(70, 100, 85, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 80% at 50% 100%, rgba(60, 90, 80, 0.15) 0%, transparent 55%),
+                /* 小溪波纹效果 - 更明显 */
+                repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(120, 170, 200, 0.06) 80px, rgba(120, 170, 200, 0.06) 84px, transparent 84px, transparent 120px),
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(120, 170, 200, 0.04) 50px, rgba(120, 170, 200, 0.04) 54px, transparent 54px, transparent 80px),
+                /* 基础渐变 - 淡青色水墨风 */
+                linear-gradient(135deg, #a8c8d8 0%, #c4dce8 25%, #b8d4e5 50%, #a0c0d0 75%, #90b8c8 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -26,7 +27,7 @@
             position: relative;
         }
         
-        /* 中国风装饰元素 */
+        /* 中国风装饰元素 - 更明显 */
         body::before {
             content: '';
             position: absolute;
@@ -35,22 +36,28 @@
             right: 0;
             bottom: 0;
             background: 
-                /* 茶碗 - 右下角 */
-                radial-gradient(ellipse 80px 60px at calc(100% - 120px) calc(100% - 100px), rgba(139, 90, 43, 0.15) 0%, transparent 70%),
-                radial-gradient(ellipse 60px 40px at calc(100% - 140px) calc(100% - 110px), rgba(160, 110, 60, 0.1) 0%, transparent 60%),
-                /* 茶杯 - 左下角 */
-                radial-gradient(ellipse 50px 40px at 80px calc(100% - 80px), rgba(180, 140, 100, 0.12) 0%, transparent 65%),
-                /* 荷叶 - 左上角 */
-                radial-gradient(ellipse 120px 100px at 60px 80px, rgba(60, 100, 60, 0.08) 0%, transparent 70%),
-                radial-gradient(ellipse 80px 70px at 100px 60px, rgba(80, 120, 80, 0.06) 0%, transparent 65%),
-                /* 荷叶 - 右上角 */
-                radial-gradient(ellipse 100px 85px at calc(100% - 80px) 70px, rgba(70, 110, 70, 0.07) 0%, transparent 68%),
-                /* 竹影 */
-                linear-gradient(85deg, transparent 45%, rgba(40, 80, 40, 0.03) 50%, transparent 55%),
-                linear-gradient(95deg, transparent 40%, rgba(40, 80, 40, 0.02) 50%, transparent 60%),
-                /* 远处山峦 */
-                radial-gradient(ellipse 300px 150px at 30% 100%, rgba(80, 90, 100, 0.1) 0%, transparent 70%),
-                radial-gradient(ellipse 250px 120px at 70% 100%, rgba(70, 85, 95, 0.08) 0%, transparent 65%);
+                /* 茶碗 - 右下角 - 更明显 */
+                radial-gradient(ellipse 100px 70px at calc(100% - 100px) calc(100% - 80px), rgba(139, 90, 43, 0.35) 0%, rgba(160, 110, 60, 0.2) 50%, transparent 75%),
+                radial-gradient(ellipse 70px 50px at calc(100% - 130px) calc(100% - 90px), rgba(180, 140, 100, 0.25) 0%, transparent 65%),
+                /* 茶杯 - 左下角 - 更明显 */
+                radial-gradient(ellipse 60px 50px at 100px calc(100% - 100px), rgba(180, 140, 100, 0.3) 0%, rgba(200, 160, 120, 0.15) 50%, transparent 70%),
+                radial-gradient(ellipse 40px 30px at 130px calc(100% - 80px), rgba(160, 120, 90, 0.2) 0%, transparent 60%),
+                /* 荷叶 - 左上角 - 更明显 */
+                radial-gradient(ellipse 150px 120px at 80px 100px, rgba(50, 90, 50, 0.2) 0%, rgba(60, 110, 60, 0.1) 50%, transparent 75%),
+                radial-gradient(ellipse 100px 90px at 140px 80px, rgba(70, 120, 70, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60px 50px at 50px 50px, rgba(40, 80, 40, 0.12) 0%, transparent 65%),
+                /* 荷叶 - 右上角 - 更明显 */
+                radial-gradient(ellipse 130px 100px at calc(100% - 100px) 90px, rgba(60, 100, 60, 0.18) 0%, rgba(70, 120, 70, 0.1) 50%, transparent 72%),
+                radial-gradient(ellipse 80px 70px at calc(100% - 140px) 60px, rgba(50, 90, 50, 0.12) 0%, transparent 65%),
+                /* 竹影 - 更明显 */
+                repeating-linear-gradient(85deg, transparent 0px, transparent 80px, rgba(30, 70, 30, 0.06) 80px, rgba(30, 70, 30, 0.06) 85px, transparent 85px, transparent 160px),
+                repeating-linear-gradient(95deg, transparent 0px, transparent 120px, rgba(30, 70, 30, 0.04) 120px, rgba(30, 70, 30, 0.04) 125px, transparent 125px, transparent 200px),
+                /* 小溪波纹 - 更明显 */
+                repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(100, 160, 190, 0.08) 100px, rgba(100, 160, 190, 0.08) 102px, transparent 102px, transparent 150px),
+                /* 远处山峦 - 更明显 */
+                radial-gradient(ellipse 400px 200px at 25% 100%, rgba(60, 80, 90, 0.2) 0%, rgba(80, 100, 110, 0.1) 50%, transparent 80%),
+                radial-gradient(ellipse 350px 160px at 75% 100%, rgba(50, 70, 80, 0.18) 0%, rgba(70, 90, 100, 0.1) 50%, transparent 75%),
+                radial-gradient(ellipse 500px 180px at 50% 100%, rgba(55, 75, 85, 0.12) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
