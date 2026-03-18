@@ -120,7 +120,7 @@
         
         .mode-selection {
             display: flex;
-            gap: 60px;
+            gap: 30px;
             margin-bottom: 40px;
         }
         
@@ -308,61 +308,66 @@
         
         /* ==================== 移动端适配 ==================== */
         @media screen and (max-width: 768px) {
-            /* 首页适配 - 确保内容在可视区域 */
+            /* 首页适配 - 紧凑布局确保一屏显示 */
             .landing-page {
-                padding: 15px;
+                padding: 10px 15px;
                 justify-content: flex-start;
-                padding-top: 10vh;
+                padding-top: 5vh;
                 min-height: 100vh;
-                overflow-y: auto;
+                gap: 10px;
             }
             
             .title-section {
-                padding: 15px 25px;
-                margin-bottom: 15px;
+                padding: 12px 20px;
+                margin-bottom: 10px;
+                border-radius: 10px;
             }
             
             .main-title {
-                font-size: 32px;
-                letter-spacing: 6px;
+                font-size: 28px;
+                letter-spacing: 4px;
             }
             
             .sub-title {
-                font-size: 12px;
-                letter-spacing: 3px;
+                font-size: 11px;
+                letter-spacing: 2px;
+                margin-top: 5px;
             }
             
             .mode-selection {
-                flex-direction: column;
-                gap: 15px;
-                margin-bottom: 20px;
+                flex-direction: row;
+                gap: 10px;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .mode-card {
-                width: 180px;
-                height: 200px;
-                padding: 15px;
+                width: 140px;
+                height: 160px;
+                padding: 12px;
+                border-radius: 12px;
             }
             
             .mode-icon {
-                font-size: 36px;
-                margin-bottom: 10px;
-            }
-            
-            .mode-card h3 {
-                font-size: 18px;
+                font-size: 28px;
                 margin-bottom: 8px;
             }
             
+            .mode-card h3 {
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            
             .mode-card p {
-                font-size: 13px;
-                line-height: 1.4;
+                font-size: 11px;
+                line-height: 1.3;
             }
             
             .enter-btn {
-                padding: 12px 35px;
+                padding: 14px 40px;
                 font-size: 16px;
-                margin-bottom: 20px;
+                margin-top: 5px;
             }
             
             /* 游戏页面适配 */
