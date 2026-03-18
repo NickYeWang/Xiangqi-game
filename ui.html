@@ -349,7 +349,7 @@
         
         <!-- 棋盘 -->
         <div class="board-wrapper">
-            <svg id="xiangqi-board" width="800" height="933" viewBox="0 0 1100 1250">
+            <svg id="xiangqi-board" width="700" height="875" viewBox="0 0 900 1150">
                 <defs>
                     <radialGradient id="redPiece" cx="30%" cy="30%" r="70%">
                         <stop offset="0%" style="stop-color:#ff6666"/>
@@ -368,7 +368,7 @@
                 </defs>
                 
                 <!-- 棋盘背景 -->
-                <rect x="25" y="25" width="1050" height="1200" fill="#e8c595" rx="5"/>
+                <rect x="25" y="25" width="850" height="1100" fill="#e8c595" rx="5"/>
                 
                 <!-- 网格线组 -->
                 <g id="board-grid" stroke="#333" stroke-width="2">
@@ -377,17 +377,17 @@
                 
                 <!-- 九宫格斜线 -->
                 <g id="palace-lines" stroke="#333" stroke-width="2">
-                    <!-- 黑方九宫格斜线：士角到将的位置 -->
-                    <line x1="300" y1="50" x2="550" y2="300" />
-                    <line x1="800" y1="50" x2="550" y2="300" />
+                    <!-- 黑方九宫格斜线：从士角(300,50)到中心(450,200)和(600,50)到中心 -->
+                    <line x1="250" y1="50" x2="450" y2="250" />
+                    <line x1="650" y1="50" x2="450" y2="250" />
                     <!-- 红方九宫格斜线 -->
-                    <line x1="300" y1="1200" x2="550" y2="950" />
-                    <line x1="800" y1="1200" x2="550" y2="950" />
+                    <line x1="250" y1="1000" x2="450" y2="750" />
+                    <line x1="650" y1="1000" x2="450" y2="750" />
                 </g>
                 
                 <!-- 楚河汉界文字 -->
-                <text x="550" y="625" text-anchor="middle" font-size="60" font-family="KaiTi, STKaiti, serif" fill="#8b4513" opacity="0.6">楚 河</text>
-                <text x="550" y="675" text-anchor="middle" font-size="60" font-family="KaiTi, STKaiti, serif" fill="#8b4513" opacity="0.6">汉 界</text>
+                <text x="450" y="535" text-anchor="middle" font-size="50" font-family="KaiTi, STKaiti, serif" fill="#8b4513" opacity="0.6">楚 河</text>
+                <text x="450" y="585" text-anchor="middle" font-size="50" font-family="KaiTi, STKaiti, serif" fill="#8b4513" opacity="0.6">汉 界</text>
                 
                 <!-- 棋子层 -->
                 <g id="pieces-layer"></g>
@@ -429,13 +429,13 @@
             'r': '車', 'n': '馬', 'b': '象', 'a': '士', 'k': '將', 'c': '砲', 'p': '卒'
         };
         
-        // 精确坐标 - 基于1100x1250 SVG的棋盘格子位置
-        // 棋盘区域: X从50到1050(1000宽), Y从50到1200(1150高)
-        const GRID_X = [50, 175, 300, 425, 550, 675, 800, 925, 1050];  // 9列
-        const GRID_Y = [50, 175, 300, 425, 550, 700, 825, 950, 1075, 1200];  // 10行(第5-6行间有150间距给楚河汉界)
+        // 精确坐标 - 基于900x1150 SVG的棋盘格子位置
+        // 棋盘区域: X从50到850(800宽), Y从50到1100(1050高)
+        const GRID_X = [50, 150, 250, 350, 450, 550, 650, 750, 850];  // 9列, 100px间距
+        const GRID_Y = [50, 150, 250, 350, 450, 600, 700, 800, 900, 1000];  // 10行, 中间150间距给楚河汉界
         
-        const PIECE_RADIUS = 42;
-        const FONT_SIZE = 38;
+        const PIECE_RADIUS = 38;
+        const FONT_SIZE = 32;
         
         // 选择游戏模式
         function selectMode(mode) {
@@ -541,12 +541,12 @@
             GameState.board = [
                 ['r', 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r'],  // 0: 黑方底线
                 ['.', '.', '.', '.', '.', '.', '.', '.', '.'],  // 1
-                ['.', 'c', '.', '.', '.', '.', '.', 'c', '.'],  // 2: 黑方砲
-                ['p', '.', 'p', '.', 'p', '.', 'p', '.', 'p'],  // 3: 黑方卒
-                ['.', '.', '.', '.', '.', '.', '.', '.', '.'],  // 4
-                ['.', '.', '.', '.', '.', '.', '.', '.', '.'],  // 5
-                ['P', '.', 'P', '.', 'P', '.', 'P', '.', 'P'],  // 6: 红方兵
-                ['.', 'C', '.', '.', '.', '.', '.', 'C', '.'],  // 7: 红方炮
+                ['.', 'c', '.', '.', '.', '.', '.', 'c', '.'],  // 2: 黑方炮 (从底线数第3行)
+                ['p', '.', 'p', '.', 'p', '.', 'p', '.', 'p'],  // 3: 黑方卒 (从底线数第4行，河界前)
+                ['.', '.', '.', '.', '.', '.', '.', '.', '.'],  // 4: 楚河汉界区域
+                ['.', '.', '.', '.', '.', '.', '.', '.', '.'],  // 5: 楚河汉界区域
+                ['P', '.', 'P', '.', 'P', '.', 'P', '.', 'P'],  // 6: 红方兵 (从底线数第4行，河界前)
+                ['.', 'C', '.', '.', '.', '.', '.', 'C', '.'],  // 7: 红方炮 (从底线数第3行)
                 ['.', '.', '.', '.', '.', '.', '.', '.', '.'],  // 8
                 ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R']   // 9: 红方底线
             ];
@@ -589,10 +589,10 @@
             // 绘制选中框
             if (GameState.selectedPiece) {
                 const frame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                frame.setAttribute('x', GRID_X[GameState.selectedPiece.col] - 50);
-                frame.setAttribute('y', GRID_Y[GameState.selectedPiece.row] - 50);
-                frame.setAttribute('width', 100);
-                frame.setAttribute('height', 100);
+                frame.setAttribute('x', GRID_X[GameState.selectedPiece.col] - 45);
+                frame.setAttribute('y', GRID_Y[GameState.selectedPiece.row] - 45);
+                frame.setAttribute('width', 90);
+                frame.setAttribute('height', 90);
                 frame.setAttribute('fill', 'none');
                 frame.setAttribute('stroke', '#ffd700');
                 frame.setAttribute('stroke-width', '4');
@@ -712,8 +712,8 @@
             const rect = svg.getBoundingClientRect();
             
             // 计算点击位置相对于SVG的坐标
-            const scaleX = 1100 / rect.width;
-            const scaleY = 1250 / rect.height;
+            const scaleX = 900 / rect.width;
+            const scaleY = 1150 / rect.height;
             
             const clickX = (event.clientX - rect.left) * scaleX;
             const clickY = (event.clientY - rect.top) * scaleY;
@@ -728,7 +728,7 @@
                     const dy = clickY - GRID_Y[row];
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (dist < minDist && dist < 60) { // 60像素范围内才算点击到交叉点
+                    if (dist < minDist && dist < 50) { // 50像素范围内才算点击到交叉点
                         minDist = dist;
                         closestCol = col;
                         closestRow = row;
